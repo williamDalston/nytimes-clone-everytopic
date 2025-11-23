@@ -543,13 +543,191 @@ const run = async () => {
         gradeDistribution[g] = (gradeDistribution[g] || 0) + 1;
     });
 
+    // Get rendering functions from template articles.js
+    const templateArticlesPath = path.join(__dirname, '../articles.js');
+    let renderingFunctions = '';
+    
+    if (fs.existsSync(templateArticlesPath)) {
+        try {
+            const templateContent = fs.readFileSync(templateArticlesPath, 'utf8');
+            // Extract everything after the articles array declaration
+            const functionsStart = templateContent.indexOf('// ============================================');
+            if (functionsStart > 0) {
+                renderingFunctions = '\n\n' + templateContent.substring(functionsStart);
+            }
+        } catch (e) {
+            console.warn('⚠️ Could not load rendering functions from template, using minimal version');
+            // Fallback: include basic rendering functions
+            renderingFunctions = `
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
+function renderArticleCard(article, isFeatured = false) {
+    const slug = article.slug || article.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    const articleUrl = \`articles/\${slug}.html\`;
+    
+    return \`
+    <article class="article-card \${isFeatured ? 'featured' : ''}" data-article-id="\${article.id}">
+      <a href="\${articleUrl}" class="article-card-link" aria-label="Read article: \${article.title}">
+        <div class="article-image-wrapper">
+          <img src="\${article.image}" alt="\${article.title}" class="article-image" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+          <span class="article-category-badge">\${article.category}</span>
+        </div>
+        <div class="article-content">
+          <h3 class="article-title">\${article.title}</h3>
+          <p class="article-excerpt">\${article.excerpt}</p>
+          <div class="article-meta">
+            <span class="article-author">\${article.author}</span>
+            <span class="article-date">
+              \${formatDate(article.date)} · \${article.readTime}
+            </span>
+          </div>
+        </div>
+      </a>
+    </article>
+  \`;
+}
+
+function renderTrendingItem(article, index) {
+    const slug = article.slug || article.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    const articleUrl = \`articles/\${slug}.html\`;
+    
+    return \`
+    <li class="trending-item">
+      <a href="\${articleUrl}" class="trending-item-link" aria-label="Read trending article: \${article.title}">
+        <span class="trending-number">\${index + 1}</span>
+        <span class="trending-title">\${article.title}</span>
+      </a>
+    </li>
+  \`;
+}
+
+// ============================================
+// RENDER FUNCTIONS
+// ============================================
+
+function renderHeroArticle() {
+    const heroArticle = articles.find(article => article.featured);
+    if (!heroArticle) return '';
+
+    const slug = heroArticle.slug || heroArticle.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    const articleUrl = \`articles/\${slug}.html\`;
+
+    return \`
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="hero-category">\${heroArticle.category}</span>
+        <h1 class="hero-title">\${heroArticle.title}</h1>
+        <p class="hero-excerpt">\${heroArticle.excerpt}</p>
+        <div class="hero-meta">
+          <span>\${heroArticle.author}</span>
+          <span>•</span>
+          <span>\${formatDate(heroArticle.date)}</span>
+          <span>•</span>
+          <span>\${heroArticle.readTime}</span>
+        </div>
+        <a href="\${articleUrl}" class="btn btn-primary">Read Full Article</a>
+      </div>
+      <div class="hero-image-wrapper">
+        <a href="\${articleUrl}" aria-label="Read article: \${heroArticle.title}">
+          <img src="\${heroArticle.image}" alt="\${heroArticle.title}" class="hero-image" loading="eager" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+        </a>
+      </div>
+    </div>
+  \`;
+}
+
+function renderSkeletonLoader() {
+    return \`
+        <div class="skeleton-article-card">
+            <div class="skeleton skeleton-image"></div>
+            <div class="skeleton-content">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text short"></div>
+                <div class="skeleton skeleton-meta"></div>
+            </div>
+        </div>
+    \`.repeat(4);
+}
+
+function renderArticles() {
+    const articlesGrid = document.getElementById('articles-grid');
+    if (!articlesGrid) return;
+
+    articlesGrid.innerHTML = renderSkeletonLoader();
+
+    setTimeout(() => {
+        const regularArticles = articles.filter(article => !article.featured);
+        articlesGrid.innerHTML = regularArticles.map(article => renderArticleCard(article)).join('');
+        
+        if (typeof initScrollAnimations === 'function') {
+            setTimeout(() => {
+                initScrollAnimations();
+            }, 100);
+        }
+    }, 800);
+}
+
+function renderTrending() {
+    const trendingList = document.getElementById('trending-list');
+    if (!trendingList) return;
+
+    const trendingArticles = articles.slice(0, 5);
+    trendingList.innerHTML = trendingArticles.map((article, index) =>
+        renderTrendingItem(article, index)
+    ).join('');
+}
+
+function filterArticlesByCategory(category) {
+    const filteredArticles = category === 'all' || category === 'All Topics'
+        ? articles.filter(article => !article.featured)
+        : articles.filter(article => article.category === category && !article.featured);
+
+    const articlesGrid = document.getElementById('articles-grid');
+    if (!articlesGrid) return;
+
+    articlesGrid.innerHTML = filteredArticles.map(article => renderArticleCard(article)).join('');
+}
+
+// ============================================
+// INITIALIZE ON PAGE LOAD
+// ============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const heroSection = document.querySelector('.hero .container');
+    if (heroSection) {
+        heroSection.innerHTML = renderHeroArticle();
+    }
+
+    renderArticles();
+    renderTrending();
+
+    console.log('Articles loaded successfully!');
+});
+`;
+        }
+    }
+
     const fileContent = `// Auto-generated by Site Factory
 // Generated: ${new Date().toISOString()}
 // Model: ${config.llm.model}
 // Pipeline: ${usePipeline ? `Phase 3: ${finalPipelineStages.length}-stage (${finalPipelineStages.join(' → ')})` : 'Single-stage'}
 // Cache: ${config.llm.useCache ? 'Enabled' : 'Disabled'}
 // Quality: Avg ${avgQuality}/100
-const articles = ${JSON.stringify(articles, null, 2)};
+const articles = ${JSON.stringify(articles, null, 2)};${renderingFunctions}
 `;
 
     // Update progress if using progress bar

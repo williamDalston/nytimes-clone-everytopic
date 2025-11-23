@@ -16,7 +16,22 @@ const errorLogger = new ErrorLogger();
 const pipelineChecker = new PipelineChecker({ errorLogger });
 const pipelineValidator = new PipelineValidator({ errorLogger, pipelineChecker });
 
-const OUTPUT_FILE = path.join(__dirname, '../templates/articles.js');
+// Support site instance output directory
+const getOutputFile = () => {
+    const siteInstance = process.env.SITE_INSTANCE;
+    if (siteInstance) {
+        const SiteInstanceManager = require('./site-instance-manager');
+        const siteManager = new SiteInstanceManager();
+        try {
+            const instance = siteManager.loadSiteInstance(siteInstance);
+            return path.join(instance.directory, 'articles.js');
+        } catch (e) {
+            // Site instance not found, use default
+            console.warn(`⚠️ Site instance ${siteInstance} not found, using default output`);
+        }
+    }
+    return path.join(__dirname, '../templates/articles.js');
+};
 
 /**
  * Bulk Content Generation
@@ -54,14 +69,18 @@ const run = async () => {
     });
 
     // Initialize Topic Manager and Lens System
-    const topicManager = new TopicManager();
+    // Support loading PowerBI topics from topics.json
+    const usePowerBITopics = process.env.USE_POWERBI_TOPICS === 'true' || process.env.USE_SOVEREIGN_MIND_TOPICS === 'false';
+    const topicManager = usePowerBITopics 
+        ? new TopicManager({ usePowerBITopics: true })
+        : new TopicManager();
     const lensSystem = new LensSystem();
     const useMultiplePerspectives = process.env.USE_MULTIPLE_PERSPECTIVES !== 'false'; // Default: true
 
     // 1. Get Topics
     let allTopicConfigs = [];
 
-    if (useSovereignMindTopics) {
+    if (useSovereignMindTopics && !usePowerBITopics) {
         // Use Sovereign Mind topics with varying styles, angles, and lenses/perspectives
         console.log(`📚 Using Sovereign Mind topics (${topicManager.getTotalCount()} total)...`);
         
@@ -101,6 +120,111 @@ const run = async () => {
                         }
                     } else {
                         // Single perspective per topic (legacy behavior)
+                        const articleConfig = topicManager.generateArticleConfig(topicObj, {
+                            style: varyStyles ? undefined : 'medium',
+                            angle: varyStyles ? undefined : 'analytical'
+                        });
+                        
+                        // Add a random lens for variety
+                        const lens = lensSystem.getRandomLens();
+                        articleConfig.lens = lens;
+                        
+                        allTopicConfigs.push(articleConfig);
+                    }
+                    
+                    if (allTopicConfigs.length >= maxArticles) break;
+                }
+            }
+            
+            if (allTopicConfigs.length >= maxArticles) break;
+        }
+        
+        // Fill remaining with random topics if needed
+        while (allTopicConfigs.length < maxArticles && allTopicConfigs.length < allTopics.length) {
+            const randomTopic = topicManager.getRandomTopic();
+            
+            if (useMultiplePerspectives && allTopicConfigs.length + 3 <= maxArticles) {
+                // Add multiple perspectives
+                const perspectives = lensSystem.getMultiplePerspectives(randomTopic, 3, {
+                    varyStyles: varyStyles
+                });
+                
+                for (const perspective of perspectives) {
+                    const articleConfig = topicManager.generateArticleConfig(randomTopic, {
+                        style: perspective.style?.name || 'medium',
+                        angle: perspective.lens?.name || 'analytical'
+                    });
+                    
+                    articleConfig.lens = perspective.lens;
+                    articleConfig.perspective = perspective.perspective;
+                    articleConfig.totalPerspectives = perspective.totalPerspectives;
+                    
+                    // Avoid duplicates
+                    if (!allTopicConfigs.find(c => 
+                        c.topic.slug === articleConfig.topic.slug && 
+                        c.perspective === articleConfig.perspective
+                    )) {
+                        allTopicConfigs.push(articleConfig);
+                    }
+                }
+            } else {
+                // Single perspective
+                const articleConfig = topicManager.generateArticleConfig(randomTopic, {
+                    style: varyStyles ? undefined : 'medium',
+                    angle: varyStyles ? undefined : 'analytical'
+                });
+                
+                const lens = lensSystem.getRandomLens();
+                articleConfig.lens = lens;
+                
+                // Avoid duplicates
+                if (!allTopicConfigs.find(c => c.topic.slug === articleConfig.topic.slug)) {
+                    allTopicConfigs.push(articleConfig);
+                }
+            }
+            
+            if (allTopicConfigs.length >= maxArticles) break;
+        }
+    } else if (usePowerBITopics) {
+        // Use PowerBI topics from topics.json
+        console.log(`📚 Using PowerBI topics from topics.json (${topicManager.getTotalCount()} total)...`);
+        
+        const allTopics = topicManager.getAllTopics();
+        
+        // Mix of topics from different categories
+        const categories = topicManager.getCategories();
+        const topicsPerCategory = Math.ceil(maxArticles / categories.length);
+        
+        for (const category of categories) {
+            const categoryTopics = topicManager.getTopicsByCategory(category);
+            const selectedTopics = categoryTopics.slice(0, Math.min(topicsPerCategory, categoryTopics.length));
+            
+            for (const topic of selectedTopics) {
+                const topicObj = topicManager.getTopicBySlug(topic.slug);
+                if (topicObj) {
+                    if (useMultiplePerspectives) {
+                        // Generate multiple perspectives (different lenses) for this topic
+                        const perspectives = lensSystem.getMultiplePerspectives(topicObj, 3, {
+                            varyStyles: varyStyles
+                        });
+                        
+                        for (const perspective of perspectives) {
+                            const articleConfig = topicManager.generateArticleConfig(topicObj, {
+                                style: perspective.style?.name || (varyStyles ? undefined : 'medium'),
+                                angle: perspective.lens?.name || (varyStyles ? undefined : 'analytical')
+                            });
+                            
+                            // Add lens/perspective information
+                            articleConfig.lens = perspective.lens;
+                            articleConfig.perspective = perspective.perspective;
+                            articleConfig.totalPerspectives = perspective.totalPerspectives;
+                            
+                            allTopicConfigs.push(articleConfig);
+                            
+                            if (allTopicConfigs.length >= maxArticles) break;
+                        }
+                    } else {
+                        // Single perspective per topic
                         const articleConfig = topicManager.generateArticleConfig(topicObj, {
                             style: varyStyles ? undefined : 'medium',
                             angle: varyStyles ? undefined : 'analytical'
@@ -434,13 +558,22 @@ const articles = ${JSON.stringify(articles, null, 2)};
     }
 
     try {
-        fs.writeFileSync(OUTPUT_FILE, fileContent);
+        const outputFile = getOutputFile();
+        // Ensure directory exists
+        const outputDir = path.dirname(outputFile);
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
+        }
+        
+        fs.writeFileSync(outputFile, fileContent);
         
         // Validate output file was created
-        const fileValidation = pipelineValidator.validateFileOperation('write', OUTPUT_FILE, true);
+        const fileValidation = pipelineValidator.validateFileOperation('write', outputFile, true);
         if (!fileValidation.valid) {
             throw new Error(`Failed to validate output file: ${fileValidation.message}`);
         }
+        
+        console.log(`✅ Articles saved to: ${outputFile}`);
     } catch (error) {
         errorLogger.log(error, {
             module: 'bulk',
@@ -452,7 +585,8 @@ const articles = ${JSON.stringify(articles, null, 2)};
     }
     
     const totalTime = ((Date.now() - startTime) / 1000).toFixed(1);
-    console.log(`\n✅ Successfully generated ${articles.length} articles in templates/articles.js`);
+    const outputFile = getOutputFile();
+    console.log(`\n✅ Successfully generated ${articles.length} articles in ${outputFile}`);
     console.log(`⏱️  Total time: ${totalTime}s`);
     if (articles.length > 0) {
         console.log(`📊 Average: ${(totalTime / articles.length).toFixed(1)}s per article`);

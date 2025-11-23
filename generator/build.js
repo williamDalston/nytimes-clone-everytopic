@@ -428,26 +428,47 @@ const build = async () => {
     const articleTemplate = readFile(path.join(__dirname, '../templates/article.html'));
 
         // Load the generated articles
-        // We need to eval the file content to get the array, or just read the JSON part if we changed the format
-        // For simplicity, let's require the file we just wrote (if it exists)
+        // Check site instance directory first, then fall back to templates
         let articles = [];
+        let articlesPath = null;
+        
+        // Try site instance directory first
+        if (siteInstanceName) {
+            articlesPath = path.join(distDir, 'articles.js');
+            if (!fs.existsSync(articlesPath)) {
+                articlesPath = null;
+            }
+        }
+        
+        // Fall back to templates directory
+        if (!articlesPath) {
+            articlesPath = path.join(__dirname, '../templates/articles.js');
+        }
+        
         try {
-            const articlesContent = readFile(path.join(__dirname, '../templates/articles.js'));
-            // Extract the array part: const articles = [...];
-            const jsonPart = articlesContent.substring(articlesContent.indexOf('['), articlesContent.lastIndexOf(']') + 1);
-            articles = JSON.parse(jsonPart);
-            
-            // Validate articles
-            if (Array.isArray(articles)) {
-                articles.forEach((article, index) => {
-                    const articleValidation = pipelineValidator.validateArticle(article, {
-                        index,
-                        operation: 'build-article-pages'
+            if (fs.existsSync(articlesPath)) {
+                const articlesContent = readFile(articlesPath);
+                // Extract the array part: const articles = [...];
+                const jsonMatch = articlesContent.match(/const articles = (\[[\s\S]*?\]);/);
+                if (jsonMatch) {
+                    articles = eval(jsonMatch[1]);
+                } else {
+                    const jsonPart = articlesContent.substring(articlesContent.indexOf('['), articlesContent.lastIndexOf(']') + 1);
+                    articles = JSON.parse(jsonPart);
+                }
+                
+                // Validate articles
+                if (Array.isArray(articles)) {
+                    articles.forEach((article, index) => {
+                        const articleValidation = pipelineValidator.validateArticle(article, {
+                            index,
+                            operation: 'build-article-pages'
+                        });
+                        if (!articleValidation.valid) {
+                            console.warn(`⚠️ Article ${index + 1} validation failed: ${articleValidation.errors.join(', ')}`);
+                        }
                     });
-                    if (!articleValidation.valid) {
-                        console.warn(`⚠️ Article ${index + 1} validation failed: ${articleValidation.errors.join(', ')}`);
-                    }
-                });
+                }
             }
         } catch (e) {
             errorLogger.log(e, {

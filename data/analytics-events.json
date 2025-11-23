@@ -575,13 +575,29 @@
         "page_title": "Understanding Coastal Erosion: Causes and Solutions"
       },
       "timestamp": "2025-11-23T06:28:12.865Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/",
+        "page_title": "Home"
+      },
+      "timestamp": "2025-11-23T06:43:10.684Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/understanding-coastal-erosion-causes-and-solutions",
+        "page_title": "Understanding Coastal Erosion: Causes and Solutions"
+      },
+      "timestamp": "2025-11-23T06:43:10.690Z"
     }
   ],
   "pageViews": {
     "/": {
-      "count": 6,
+      "count": 7,
       "firstSeen": "2025-11-23T06:04:31.194Z",
-      "lastSeen": "2025-11-23T06:28:12.861Z"
+      "lastSeen": "2025-11-23T06:43:10.684Z"
     },
     "/articles/the-future-of-power-bi-trends-2025-what-you-need-to-know": {
       "count": 3,
@@ -689,9 +705,9 @@
       "lastSeen": "2025-11-23T06:27:00.720Z"
     },
     "/articles/understanding-coastal-erosion-causes-and-solutions": {
-      "count": 1,
+      "count": 2,
       "firstSeen": "2025-11-23T06:28:12.865Z",
-      "lastSeen": "2025-11-23T06:28:12.865Z"
+      "lastSeen": "2025-11-23T06:43:10.690Z"
     }
   },
   "customEvents": {
@@ -1271,6 +1287,22 @@
           "page_title": "Understanding Coastal Erosion: Causes and Solutions"
         },
         "timestamp": "2025-11-23T06:28:12.865Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/",
+          "page_title": "Home"
+        },
+        "timestamp": "2025-11-23T06:43:10.684Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/understanding-coastal-erosion-causes-and-solutions",
+          "page_title": "Understanding Coastal Erosion: Causes and Solutions"
+        },
+        "timestamp": "2025-11-23T06:43:10.690Z"
       }
     ]
   }

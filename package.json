@@ -9,6 +9,7 @@
     "generate": "node generator/content.js",
     "bulk": "node generator/bulk.js",
     "create-site": "node generator/create-site.js",
+    "create-powerbi-site": "node generator/create-powerbi-site.js",
     "report": "node generator/report.js",
     "check": "node generator/check.js",
     "health": "node generator/health-report.js",

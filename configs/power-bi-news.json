@@ -1,0 +1,81 @@
+{
+  "identity": {
+    "name": "Power BI News",
+    "domain": "power-bi-news.com",
+    "description": "Your premier source for Power BI insights, news, and analysis.",
+    "keywords": "Power BI, Business Intelligence, Data Analytics, DAX, Power Query, insights, analysis, news",
+    "logoText": "Power",
+    "logoAccent": "BI",
+    "newsletterTitle": "Stay Updated with Power BI Insights",
+    "newsletterDescription": "Get the latest articles, tutorials, and best practices delivered to your inbox weekly.",
+    "footerDescription": "Your premier destination for Power BI insights, tutorials, and industry best practices.",
+    "quickTip": "<strong>Did you know?</strong> Stay updated with the latest Power BI insights and best practices!"
+  },
+  "content": {
+    "primaryTopic": "Power BI",
+    "topicCategories": [
+      "Power BI Basics",
+      "Advanced Analytics",
+      "Visualizations",
+      "Data Modeling",
+      "Security",
+      "Performance"
+    ],
+    "useSovereignMindTopics": false,
+    "usePowerBITopics": true,
+    "maxArticles": 10
+  },
+  "layout": {
+    "gridColumns": 2,
+    "featuredStyle": "hero",
+    "cardVariations": true,
+    "spacing": {
+      "articleGap": "var(--space-8)",
+      "sectionPadding": "var(--space-10)"
+    }
+  },
+  "monetization": {
+    "ads": {
+      "enabled": true,
+      "publisherId": "pub-XXXXXXXXXXXXXXXX",
+      "placements": [
+        "header",
+        "sidebar",
+        "inContent",
+        "footer"
+      ]
+    },
+    "affiliate": {
+      "enabled": false,
+      "program": ""
+    }
+  },
+  "generation": {
+    "maxArticles": 50,
+    "usePipeline": true,
+    "pipelineStages": [
+      "blueprint",
+      "draft",
+      "enhance",
+      "humanize",
+      "seo"
+    ],
+    "varyStyles": true,
+    "varyAngles": true,
+    "useMultiplePerspectives": true
+  },
+  "social": {
+    "twitter": "@sitehandle",
+    "facebook": "sitepage",
+    "linkedin": "sitecompany"
+  },
+  "analytics": {
+    "enabled": true,
+    "ga4Id": "",
+    "tracking": {
+      "pageViews": true,
+      "scrollDepth": true,
+      "readingTime": true
+    }
+  }
+}

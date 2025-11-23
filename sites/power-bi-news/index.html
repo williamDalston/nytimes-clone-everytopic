@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Your premier source for Power BI insights, news, and analysis.">
+  <meta name="keywords" content="Power BI, Business Intelligence, Data Analytics, DAX, Power Query, insights, analysis, news">
+  <meta name="author" content="Power BI News">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Power BI News - Power BI">
+  <meta property="og:description" content="Your premier source for Power BI insights, news, and analysis.">
+  <meta property="og:url" content="https://power-bi-news.com">
+  <meta property="og:image" content="https://power-bi-news.com/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Power BI News">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Power BI News - Power BI">
+  <meta name="twitter:description" content="Your premier source for Power BI insights, news, and analysis.">
+  <meta name="twitter:image" content="https://power-bi-news.com/images/twitter-card.jpg">
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Power BI News",
+    "url": "https://power-bi-news.com",
+    "logo": "https://power-bi-news.com/images/logo.png",
+    "description": "Your premier source for Power BI insights, news, and analysis.",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Structured Data - Website -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Power BI News",
+    "url": "https://power-bi-news.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://power-bi-news.com/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - NewsArticle Collection -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": []
+  }
+  </script>
+
+  
+    <title>Power BI News - Power BI</title>
+    <meta name="description" content="Your premier source for Power BI insights, news, and analysis.">
+    <meta name="keywords" content="Power BI, Business Intelligence, Data Analytics, DAX, Power Query, insights, analysis, news">
+    <meta name="theme-color" content="#bb1919">
+    <link rel="canonical" href="https://power-bi-news.com/">
+    <meta property="og:title" content="Power BI News">
+    <meta property="og:description" content="Your premier source for Power BI insights, news, and analysis.">
+    <meta property="og:url" content="https://power-bi-news.com/">
+    <meta property="og:site_name" content="Power BI News">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Power BI News",
+      "url": "https://power-bi-news.com/"
+    }
+    </script>
+  
+  
+  <!-- Analytics Script (if enabled) -->
+  
+<!-- Custom Analytics Tracking -->
+    <script>
+        // Track page views
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
+
+        // Track article engagement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track scroll depth
+            let maxScroll = 0;
+            window.addEventListener('scroll', function() {
+                const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+                if (scrollPercent > maxScroll && scrollPercent % 25 === 0) {
+                    maxScroll = scrollPercent;
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll', {
+                            scroll_depth: scrollPercent
+                        });
+                    }
+                }
+            });
+
+            // Track time on page
+            const startTime = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'time_on_page', {
+                        time_on_page: timeOnPage
+                    });
+                }
+            });
+
+            // Track article reads (if article page)
+            if (document.querySelector('.article-full')) {
+                setTimeout(function() {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'article_read', {
+                            article_title: document.querySelector('h1')?.textContent || '',
+                            read_time: document.querySelector('.read-time')?.textContent || ''
+                        });
+                    }
+                }, 30000); // Track after 30 seconds
+            }
+        });
+    </script>
+<!-- Performance Monitoring - Core Web Vitals -->
+    <script>
+        // Track Core Web Vitals with error handling
+        (function() {
+            if (typeof window === 'undefined' || !('PerformanceObserver' in window)) {
+                return; // Not in browser or not supported
+            }
+            
+            try {
+            // Largest Contentful Paint (LCP)
+            try {
+                const lcpObserver = new PerformanceObserver((list) => {
+                    const entries = list.getEntries();
+                    const lastEntry = entries[entries.length - 1];
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'web_vitals', {
+                            event_category: 'Web Vitals',
+                            event_label: 'LCP',
+                            value: Math.round(lastEntry.renderTime || lastEntry.loadTime),
+                            non_interaction: true
+                        });
+                    }
+                });
+                lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+            } catch (e) {
+                console.warn('LCP observer not supported');
+            }
+
+            // First Input Delay (FID)
+            try {
+                const fidObserver = new PerformanceObserver((list) => {
+                    const entries = list.getEntries();
+                    entries.forEach((entry) => {
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'web_vitals', {
+                                event_category: 'Web Vitals',
+                                event_label: 'FID',
+                                value: Math.round(entry.processingStart - entry.startTime),
+                                non_interaction: true
+                            });
+                        }
+                    });
+                });
+                fidObserver.observe({ entryTypes: ['first-input'] });
+            } catch (e) {
+                console.warn('FID observer not supported');
+            }
+
+            // Cumulative Layout Shift (CLS)
+            try {
+                let clsValue = 0;
+                let clsEntries = [];
+                let sessionValue = 0;
+                let sessionEntries = [];
+
+                const clsObserver = new PerformanceObserver((list) => {
+                    for (const entry of list.getEntries()) {
+                        if (!entry.hadRecentInput) {
+                            const firstSessionEntry = sessionEntries[0];
+                            const lastSessionEntry = sessionEntries[sessionEntries.length - 1];
+                            
+                            if (sessionValue && 
+                                entry.startTime - lastSessionEntry.startTime < 1000 &&
+                                entry.startTime - firstSessionEntry.startTime < 5000) {
+                                sessionValue += entry.value;
+                                sessionEntries.push(entry);
+                            } else {
+                                sessionValue = entry.value;
+                                sessionEntries = [entry];
+                            }
+                            
+                            if (sessionValue > clsValue) {
+                                clsValue = sessionValue;
+                                clsEntries = [...sessionEntries];
+                                
+                                if (typeof gtag !== 'undefined') {
+                                    gtag('event', 'web_vitals', {
+                                        event_category: 'Web Vitals',
+                                        event_label: 'CLS',
+                                        value: Math.round(clsValue * 1000),
+                                        non_interaction: true
+                                    });
+                                }
+                            }
+                        }
+                    }
+                });
+                clsObserver.observe({ entryTypes: ['layout-shift'] });
+            } catch (e) {
+                console.warn('CLS observer not supported');
+            }
+
+            // First Contentful Paint (FCP)
+            try {
+                const fcpObserver = new PerformanceObserver((list) => {
+                    const entries = list.getEntries();
+                    entries.forEach((entry) => {
+                        if (entry.name === 'first-contentful-paint') {
+                            if (typeof gtag !== 'undefined') {
+                                gtag('event', 'web_vitals', {
+                                    event_category: 'Web Vitals',
+                                    event_label: 'FCP',
+                                    value: Math.round(entry.startTime),
+                                    non_interaction: true
+                                });
+                            }
+                        }
+                    });
+                });
+                fcpObserver.observe({ entryTypes: ['paint'] });
+            } catch (e) {
+                console.warn('FCP observer not supported');
+            }
+        }
+
+        // Track page load performance
+        window.addEventListener('load', function() {
+            if (window.performance && window.performance.timing) {
+                const timing = window.performance.timing;
+                const navigation = window.performance.navigation;
+                
+                // Time to First Byte (TTFB)
+                const ttfb = timing.responseStart - timing.navigationStart;
+                
+                // Time to Interactive (TTI) - approximate
+                const domInteractive = timing.domInteractive - timing.navigationStart;
+                const domComplete = timing.domComplete - timing.navigationStart;
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'page_performance', {
+                        event_category: 'Performance',
+                        event_label: 'TTFB',
+                        value: Math.round(ttfb),
+                        non_interaction: true
+                    });
+                    
+                    gtag('event', 'page_performance', {
+                        event_category: 'Performance',
+                        event_label: 'DOM_Interactive',
+                        value: Math.round(domInteractive),
+                        non_interaction: true
+                    });
+                    
+                    gtag('event', 'page_performance', {
+                        event_category: 'Performance',
+                        event_label: 'DOM_Complete',
+                        value: Math.round(domComplete),
+                        non_interaction: true
+                    });
+                }
+            }
+        } catch (e) {
+            console.warn('Performance monitoring error:', e);
+        }
+        })();
+    </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+      rel="stylesheet">
+  </noscript>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- ============================================
+       HEADER & NAVIGATION
+       ============================================ -->
+  <header class="header" id="header" role="banner">
+    <div class="container">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          Power<span class="logo-accent">BI</span>
+        </a>
+
+        <!-- Navigation Menu -->
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="nav-menu">
+            <li><a href="#" class="nav-link active">All Topics</a></li>
+            <li><a href="#" class="nav-link">Latest Updates</a></li>
+            <li><a href="#" class="nav-link">Visualizations</a></li>
+            <li><a href="#" class="nav-link">Advanced Analytics</a></li>
+            <li><a href="#" class="nav-link">Power BI Basics</a></li>
+            <li><a href="#" class="nav-link">Data Modeling</a></li>
+            <li><a href="#" class="nav-link">Security</a></li>
+            <li><a href="#" class="nav-link">Performance</a></li>
+            <li><a href="#" class="nav-link">AI & ML</a></li>
+          </ul>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <button class="search-btn" id="search-btn" aria-label="Search">
+            <svg class="icon icon-search" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <span class="sr-only">Search</span>
+          </button>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            <svg class="icon icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" x2="19.78"></line>
+            </svg>
+            <span class="sr-only">Toggle dark mode</span>
+          </button>
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <svg class="icon icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg class="icon icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span class="sr-only">Toggle menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero">
+    <div class="container">
+      <!-- Hero content will be dynamically inserted by JavaScript -->
+    </div>
+  </section>
+
+  <!-- ============================================
+       MAIN CONTENT AREA
+       ============================================ -->
+  <main class="articles-section" id="main-content" role="main">
+    <div class="container">
+
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item" aria-current="page">Latest Articles</li>
+        </ol>
+      </nav>
+
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">Latest Articles</h2>
+        <a href="#" class="view-all-link">View All →</a>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="main-content">
+
+        <!-- Articles Grid -->
+        <div class="articles-grid" id="articles-grid">
+          <!-- Articles will be dynamically inserted by JavaScript -->
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" role="complementary" aria-label="Sidebar">
+
+          
+
+          <!-- Trending Section -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trending Now</h3>
+            <ul class="trending-list" id="trending-list">
+              <!-- Trending items will be dynamically inserted by JavaScript -->
+            </ul>
+          </div>
+
+          <!-- Editor's Picks Section -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Categories</h3>
+            <ul class="trending-list">
+              <li class="trending-item"><span class="trending-title">Latest Updates</span></li>
+              <li class="trending-item"><span class="trending-title">Visualizations</span></li>
+              <li class="trending-item"><span class="trending-title">Advanced Analytics</span></li>
+              <li class="trending-item"><span class="trending-title">Power BI Basics</span></li>
+              <li class="trending-item"><span class="trending-title">Data Modeling</span></li>
+              <li class="trending-item"><span class="trending-title">Security</span></li>
+              <li class="trending-item"><span class="trending-title">Performance</span></li>
+              <li class="trending-item"><span class="trending-title">AI & ML</span></li>
+            </ul>
+          </div>
+
+          <!-- Quick Tips Section -->
+          <div class="sidebar-section"
+            style="background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-accent) 100%); color: white;">
+            <h3 class="sidebar-title" style="color: white; border-bottom-color: white;">Quick Tip</h3>
+            <p style="font-size: var(--text-sm); line-height: 1.6; margin-bottom: var(--space-4);">
+              <strong>Did you know?</strong> Stay updated with the latest Power BI insights and best practices!
+            </p>
+            <button class="btn" style="background: white; color: var(--color-accent); width: 100%;">
+              More Tips
+            </button>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================
+       NEWSLETTER SECTION
+       ============================================ -->
+  <section class="newsletter-section">
+    <div class="container">
+      <h2>Stay Updated with Power BI Insights</h2>
+      <p>Get the latest articles, tutorials, and best practices delivered to your inbox weekly.</p>
+
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address"
+          required aria-label="Email address">
+        <button type="submit" class="newsletter-btn">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+
+  
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-content">
+
+        <!-- About Section -->
+        <div class="footer-section">
+          <h4>About Power BI News</h4>
+          <p style="color: rgba(255, 255, 255, 0.8); font-size: var(--text-sm); line-height: 1.6;">
+            Your premier destination for Power BI insights, tutorials, and industry best practices.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span class="sr-only">Twitter</span>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              <span class="sr-only">LinkedIn</span>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+              <span class="sr-only">YouTube</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">All Articles</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#">Latest Updates</a></li>
+            <li><a href="#">Visualizations</a></li>
+            <li><a href="#">Advanced Analytics</a></li>
+            <li><a href="#">Power BI Basics</a></li>
+            <li><a href="#">Data Modeling</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Performance</a></li>
+            <li><a href="#">AI & ML</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Best Practices</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2025 Power BI News. All rights reserved. | <a href="#"
+            style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> | <a href="#"
+            style="color: rgba(255, 255, 255, 0.8);">Terms of Service</a></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script src="articles.js"></script>
+  <script src="main.js"></script>
+
+</body>
+
+</html>

@@ -203,10 +203,75 @@ const ARTICLE_ANGLES = {
  * Topic Manager Class
  */
 class TopicManager {
-    constructor() {
-        this.topics = this._flattenTopics(SOVEREIGN_MIND_TOPICS);
-        this.currentTopicIndex = 0;
-        this.categoryMap = this._buildCategoryMap(SOVEREIGN_MIND_TOPICS);
+    constructor(options = {}) {
+        // Support loading topics from topics.json file
+        if (options.topicsFile || options.usePowerBITopics) {
+            this._loadTopicsFromFile(options.topicsFile);
+        } else {
+            this.topics = this._flattenTopics(SOVEREIGN_MIND_TOPICS);
+            this.currentTopicIndex = 0;
+            this.categoryMap = this._buildCategoryMap(SOVEREIGN_MIND_TOPICS);
+        }
+    }
+
+    /**
+     * Load topics from topics.json file (PowerBI or other custom topics)
+     */
+    _loadTopicsFromFile(topicsFile = null) {
+        const fs = require('fs');
+        const path = require('path');
+        
+        const topicsPath = topicsFile || path.join(__dirname, '../data/topics.json');
+        
+        if (!fs.existsSync(topicsPath)) {
+            console.warn(`⚠️ Topics file not found: ${topicsPath}. Using default Sovereign Mind topics.`);
+            this.topics = this._flattenTopics(SOVEREIGN_MIND_TOPICS);
+            this.currentTopicIndex = 0;
+            this.categoryMap = this._buildCategoryMap(SOVEREIGN_MIND_TOPICS);
+            return;
+        }
+
+        try {
+            const topicsData = JSON.parse(fs.readFileSync(topicsPath, 'utf8'));
+            
+            // Load from "default" section (PowerBI topics) or "sovereignMind"
+            let topicsSource = null;
+            if (topicsData.default && topicsData.default.categories) {
+                topicsSource = this._convertTopicsJsonToStructure(topicsData.default);
+            } else if (topicsData.sovereignMind && topicsData.sovereignMind.categories) {
+                topicsSource = this._convertTopicsJsonToStructure(topicsData.sovereignMind);
+            }
+            
+            if (topicsSource) {
+                this.topics = this._flattenTopics(topicsSource);
+                this.currentTopicIndex = 0;
+                this.categoryMap = this._buildCategoryMap(topicsSource);
+                console.log(`✅ Loaded ${this.topics.length} topics from ${topicsPath}`);
+            } else {
+                throw new Error('No valid topics found in topics.json');
+            }
+        } catch (error) {
+            console.warn(`⚠️ Error loading topics file: ${error.message}. Using default Sovereign Mind topics.`);
+            this.topics = this._flattenTopics(SOVEREIGN_MIND_TOPICS);
+            this.currentTopicIndex = 0;
+            this.categoryMap = this._buildCategoryMap(SOVEREIGN_MIND_TOPICS);
+        }
+    }
+
+    /**
+     * Convert topics.json structure to internal format
+     */
+    _convertTopicsJsonToStructure(topicsData) {
+        const structure = {};
+        
+        if (topicsData.categories && Array.isArray(topicsData.categories)) {
+            topicsData.categories.forEach(category => {
+                const categoryName = category.name.toLowerCase().replace(/\s+/g, '-');
+                structure[categoryName] = category.topics || [];
+            });
+        }
+        
+        return structure;
     }
 
     /**
@@ -216,11 +281,17 @@ class TopicManager {
         const allTopics = [];
         for (const [category, topics] of Object.entries(topicCategories)) {
             topics.forEach(topic => {
+                // Handle both string topics and object topics
+                const topicTitle = typeof topic === 'string' ? topic : (topic.title || topic.name || topic);
+                const topicSlug = typeof topic === 'string' 
+                    ? topic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+                    : (topic.slug || topicTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''));
+                
                 allTopics.push({
-                    slug: topic,
+                    slug: topicSlug,
                     category: category,
-                    title: this._slugToTitle(topic),
-                    fullName: `${category}: ${this._slugToTitle(topic)}`
+                    title: this._slugToTitle(topicTitle),
+                    fullName: `${category}: ${this._slugToTitle(topicTitle)}`
                 });
             });
         }
@@ -245,6 +316,11 @@ class TopicManager {
      * Convert slug to readable title
      */
     _slugToTitle(slug) {
+        // If it's already a title (contains spaces), return as-is
+        if (typeof slug === 'string' && slug.includes(' ')) {
+            return slug;
+        }
+        // Otherwise convert from slug format
         return slug
             .split('-')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))

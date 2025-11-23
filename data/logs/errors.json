@@ -718,76 +718,204 @@
         "articleId": 2,
         "operation": "final-article-validation"
       }
+    },
+    {
+      "id": "1763879824425-9oekj2ljj",
+      "timestamp": "2025-11-23T06:37:04.425Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:382:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "topic": "Query Optimization",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "topic": "Query Optimization",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879824713-k3mu77tt6",
+      "timestamp": "2025-11-23T06:37:04.713Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:454:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879825218-5vhssjsxx",
+      "timestamp": "2025-11-23T06:37:05.218Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:382:57)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "topic": "Query Optimization",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "topic": "Query Optimization",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879825218-4u0m3058j",
+      "timestamp": "2025-11-23T06:37:05.218Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:454:55)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879825721-wsokqrto8",
+      "timestamp": "2025-11-23T06:37:05.721Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:382:57)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 3,
+          "topic": "Query Optimization",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 3,
+        "topic": "Query Optimization",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879825722-7kfuk3m8d",
+      "timestamp": "2025-11-23T06:37:05.722Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:454:55)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 3,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 3,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879987825-o8ze880st",
+      "timestamp": "2025-11-23T06:39:47.825Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:382:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 4,
+          "topic": "Complex Calculations",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 4,
+        "topic": "Complex Calculations",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879988010-0eog1afve",
+      "timestamp": "2025-11-23T06:39:48.010Z",
+      "message": "Article contains AI-sounding phrases: 1 detected",
+      "stack": "Error: Article contains AI-sounding phrases: 1 detected\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:454:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async createPowerBISite (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/create-powerbi-site.js:166:13)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 4,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 4,
+        "operation": "final-article-validation"
+      }
     }
   ],
   "summary": {
-    "total": 33,
+    "total": 41,
     "byCategory": {
       "pipeline": 10,
-      "validation": 23
+      "validation": 31
     },
     "bySeverity": {
       "error": 3,
-      "warning": 29,
+      "warning": 37,
       "critical": 1
     },
     "recent": [
-      {
-        "id": "1763879220477-uzouh6zir",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.477Z"
-      },
-      {
-        "id": "1763879220478-auc0pbnig",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.478Z"
-      },
-      {
-        "id": "1763879220478-pajjxrv76",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.478Z"
-      },
-      {
-        "id": "1763879220715-9bygjag0v",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.715Z"
-      },
-      {
-        "id": "1763879220716-jn0935oca",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.716Z"
-      },
-      {
-        "id": "1763879220716-m34h4ec2i",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:00.716Z"
-      },
-      {
-        "id": "1763879271738-p6sazou9i",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:51.738Z"
-      },
-      {
-        "id": "1763879272316-mmoa1hksf",
-        "message": "Article content seems too short (less than 100 characters)",
-        "category": "validation",
-        "severity": "warning",
-        "timestamp": "2025-11-23T06:27:52.316Z"
-      },
       {
         "id": "1763879272817-xcvxe0kqk",
         "message": "Article content seems too short (less than 100 characters)",
@@ -801,8 +929,64 @@
         "category": "validation",
         "severity": "warning",
         "timestamp": "2025-11-23T06:27:52.818Z"
+      },
+      {
+        "id": "1763879824425-9oekj2ljj",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:04.425Z"
+      },
+      {
+        "id": "1763879824713-k3mu77tt6",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:04.713Z"
+      },
+      {
+        "id": "1763879825218-5vhssjsxx",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:05.218Z"
+      },
+      {
+        "id": "1763879825218-4u0m3058j",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:05.218Z"
+      },
+      {
+        "id": "1763879825721-wsokqrto8",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:05.721Z"
+      },
+      {
+        "id": "1763879825722-7kfuk3m8d",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:37:05.722Z"
+      },
+      {
+        "id": "1763879987825-o8ze880st",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:39:47.825Z"
+      },
+      {
+        "id": "1763879988010-0eog1afve",
+        "message": "Article contains AI-sounding phrases: 1 detected",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:39:48.010Z"
       }
     ]
   },
-  "timestamp": "2025-11-23T06:27:52.818Z"
+  "timestamp": "2025-11-23T06:39:48.010Z"
 }

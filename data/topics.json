@@ -1,0 +1,224 @@
+{
+  "description": "Topics configuration for the site. Each site instance can have its own topics list.",
+  "default": {
+    "primaryTopic": "Power BI",
+    "categories": [
+      {
+        "name": "Power BI Basics",
+        "topics": [
+          "Getting Started with Power BI",
+          "Understanding Power BI Desktop",
+          "Data Import and Connection",
+          "Basic Visualizations",
+          "Creating Your First Report"
+        ]
+      },
+      {
+        "name": "Advanced Analytics",
+        "topics": [
+          "DAX Formulas and Functions",
+          "Advanced Data Modeling",
+          "Power Query M Language",
+          "Performance Optimization",
+          "Complex Calculations"
+        ]
+      },
+      {
+        "name": "Visualizations",
+        "topics": [
+          "Custom Visualizations",
+          "Interactive Dashboards",
+          "Data Storytelling",
+          "Visual Best Practices",
+          "Chart Types and When to Use Them"
+        ]
+      },
+      {
+        "name": "Data Modeling",
+        "topics": [
+          "Star Schema Design",
+          "Relationship Management",
+          "Calculated Tables",
+          "Time Intelligence",
+          "Data Governance"
+        ]
+      },
+      {
+        "name": "Security",
+        "topics": [
+          "Row-Level Security",
+          "Data Privacy",
+          "Access Control",
+          "Compliance and Governance",
+          "Secure Data Sharing"
+        ]
+      },
+      {
+        "name": "Performance",
+        "topics": [
+          "Query Optimization",
+          "Model Optimization",
+          "Refresh Strategies",
+          "Performance Monitoring",
+          "Best Practices for Speed"
+        ]
+      }
+    ]
+  },
+  "sovereignMind": {
+    "description": "Sovereign Mind topics organized by category",
+    "categories": [
+      {
+        "name": "Nature",
+        "topics": [
+          "coastal-erosion",
+          "climate-feedbacks",
+          "ocean-acidification",
+          "biodiversity-loss",
+          "resource-depletion",
+          "ecosystem-restoration",
+          "sustainable-agriculture",
+          "renewable-energy-transition",
+          "water-security",
+          "wildlife-conservation"
+        ]
+      },
+      {
+        "name": "Mind",
+        "topics": [
+          "attention-economy",
+          "sleep-architecture",
+          "memory-consolidation",
+          "cognitive-load",
+          "decision-fatigue",
+          "mindfulness-practice",
+          "neuroplasticity",
+          "focus-training",
+          "mental-models",
+          "cognitive-biases"
+        ]
+      },
+      {
+        "name": "Society",
+        "topics": [
+          "polarization",
+          "urban-design",
+          "social-cohesion",
+          "information-cascades",
+          "collective-intelligence",
+          "community-building",
+          "civic-engagement",
+          "social-capital",
+          "cultural-evolution",
+          "democratic-participation"
+        ]
+      },
+      {
+        "name": "Technology",
+        "topics": [
+          "ai-alignment",
+          "algorithmic-bias",
+          "network-effects",
+          "platform-governance",
+          "privacy-tradeoffs",
+          "ethical-ai",
+          "digital-divide",
+          "cybersecurity",
+          "data-sovereignty",
+          "technological-determinism"
+        ]
+      },
+      {
+        "name": "Economy",
+        "topics": [
+          "incentive-design",
+          "market-failures",
+          "behavioral-economics",
+          "value-creation",
+          "systemic-risk",
+          "circular-economy",
+          "sharing-economy",
+          "economic-inequality",
+          "sustainable-growth",
+          "regenerative-economics"
+        ]
+      },
+      {
+        "name": "Philosophy",
+        "topics": [
+          "virtue-ethics",
+          "stoic-practice",
+          "existential-meaning",
+          "moral-development",
+          "wisdom-tradition",
+          "philosophical-inquiry",
+          "ethics-of-care",
+          "justice-theory",
+          "metaphysical-foundations",
+          "practical-wisdom"
+        ]
+      },
+      {
+        "name": "Health",
+        "topics": [
+          "preventive-medicine",
+          "mental-health",
+          "lifestyle-medicine",
+          "wellness-practice",
+          "holistic-health",
+          "public-health",
+          "health-equity",
+          "longevity-research",
+          "integrative-medicine",
+          "health-literacy"
+        ]
+      },
+      {
+        "name": "Education",
+        "topics": [
+          "lifelong-learning",
+          "critical-thinking",
+          "educational-innovation",
+          "personalized-learning",
+          "education-equity",
+          "skills-development",
+          "learning-sciences",
+          "pedagogical-methods",
+          "educational-technology",
+          "knowledge-construction"
+        ]
+      },
+      {
+        "name": "Communication",
+        "topics": [
+          "rhetorical-strategy",
+          "persuasive-communication",
+          "active-listening",
+          "nonviolent-communication",
+          "public-speaking",
+          "narrative-persuasion",
+          "digital-communication",
+          "interpersonal-skills",
+          "communication-ethics",
+          "effective-messaging"
+        ]
+      },
+      {
+        "name": "Governance",
+        "topics": [
+          "democratic-institutions",
+          "policy-design",
+          "civic-participation",
+          "transparency-accountability",
+          "institutional-reform",
+          "public-administration",
+          "governance-models",
+          "policy-innovation",
+          "citizen-engagement",
+          "institutional-trust"
+        ]
+      }
+    ]
+  }
+}
+

@@ -9,6 +9,7 @@ const CostTracker = require('./cost-tracker');
 const ErrorLogger = require('./error-logger');
 const PipelineChecker = require('./pipeline-checker');
 const PipelineValidator = require('./pipeline-validator');
+const { ProgressBar } = require('./utils/progress');
 
 // Initialize Error Logger and Validation
 const errorLogger = new ErrorLogger();
@@ -206,6 +207,16 @@ const run = async () => {
     let idCounter = 1;
     const startTime = Date.now();
 
+    // Initialize progress bar if requested
+    let progressBar = null;
+    if (process.env.USE_PROGRESS_BAR === 'true') {
+        progressBar = new ProgressBar({
+            total: allTopicConfigs.length,
+            format: 'progress [{bar}] {percentage}% | {value}/{total} articles | {stage}'
+        });
+        progressBar.start(allTopicConfigs.length, 0, { stage: 'Starting article generation...' });
+    }
+
     for (const articleConfig of allTopicConfigs) {
         const topicDisplay = articleConfig.topic.title || articleConfig.topic.slug;
         const styleDisplay = articleConfig.style.name;
@@ -323,28 +334,42 @@ const run = async () => {
             
             articles.push(finalArticle);
 
+            // Update progress bar
+            if (progressBar) {
+                const topicDisplay = articleConfig.topic.title || articleConfig.topic.slug;
+                progressBar.increment(1, { 
+                    stage: `Generated: ${topicDisplay.substring(0, 40)}...` 
+                });
+            }
+
             // Phase 3: Log quality and cost info
             if (articleData.quality) {
                 const quality = articleData.quality;
-                console.log(`   ✅ Quality: ${quality.grade} (${quality.scores.overall.toFixed(1)}/100)`);
+                if (!progressBar) { // Only log to console if no progress bar
+                    console.log(`   ✅ Quality: ${quality.grade} (${quality.scores.overall.toFixed(1)}/100)`);
+                }
                 
                 // Phase 3 Refinement: Warn about low quality
                 if (quality.scores.overall < 60) {
-                    console.warn(`   ⚠️ Low quality score - consider regenerating`);
-                    if (quality.recommendations && quality.recommendations.length > 0) {
-                        console.log(`   💡 Recommendations: ${quality.recommendations.slice(0, 2).join(', ')}`);
+                    if (!progressBar) {
+                        console.warn(`   ⚠️ Low quality score - consider regenerating`);
+                        if (quality.recommendations && quality.recommendations.length > 0) {
+                            console.log(`   💡 Recommendations: ${quality.recommendations.slice(0, 2).join(', ')}`);
+                        }
                     }
                 }
             }
-            if (articleData._tokenUsage) {
+            if (articleData._tokenUsage && !progressBar) {
                 const tokens = articleData._tokenUsage;
                 console.log(`   💰 Tokens: ${tokens.total.toLocaleString()} (${tokens.input.toLocaleString()} in + ${tokens.output.toLocaleString()} out)`);
             }
 
-            // Progress indicator
-            const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-            const avgTime = (elapsed / idCounter).toFixed(1);
-            console.log(`   ⏱️  Generated in ${avgTime}s (avg)`);
+            // Progress indicator (only if no progress bar)
+            if (!progressBar) {
+                const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+                const avgTime = (elapsed / idCounter).toFixed(1);
+                console.log(`   ⏱️  Generated in ${avgTime}s (avg)`);
+            }
 
             // Rate limiting delay (avoid hitting API rate limits)
             if (!config.llm.dryRun) {
@@ -364,7 +389,16 @@ const run = async () => {
             console.error(`   ❌ Failed to generate article: ${error.message}`);
             // Continue with next article even if one fails
             idCounter++;
+            // Update progress bar even on error
+            if (progressBar) {
+                progressBar.increment(1, { stage: 'Error occurred, continuing...' });
+            }
         }
+    }
+
+    // Complete progress bar
+    if (progressBar) {
+        progressBar.complete({ stage: 'All articles generated!' });
     }
 
     // 3. Save to articles.js
@@ -393,6 +427,11 @@ const run = async () => {
 // Quality: Avg ${avgQuality}/100
 const articles = ${JSON.stringify(articles, null, 2)};
 `;
+
+    // Update progress if using progress bar
+    if (progressBar) {
+        progressBar.setStage('Saving articles to file...');
+    }
 
     try {
         fs.writeFileSync(OUTPUT_FILE, fileContent);

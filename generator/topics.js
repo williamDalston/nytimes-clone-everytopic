@@ -332,8 +332,39 @@ class TopicManager {
      * Returns style, angle, and topic info
      */
     generateArticleConfig(topic, options = {}) {
-        const style = options.style || this.getRandomStyle();
-        const angle = options.angle || this.getRandomAngle();
+        // Handle style: can be string (name) or object {name, config}
+        let style;
+        if (typeof options.style === 'string') {
+            style = {
+                name: options.style,
+                config: ARTICLE_STYLES[options.style] || ARTICLE_STYLES.medium
+            };
+        } else if (options.style && options.style.name) {
+            // Already an object with name, ensure config exists
+            style = {
+                name: options.style.name,
+                config: options.style.config || ARTICLE_STYLES[options.style.name] || ARTICLE_STYLES.medium
+            };
+        } else {
+            style = this.getRandomStyle();
+        }
+        
+        // Handle angle: can be string (name) or object {name, config}
+        let angle;
+        if (typeof options.angle === 'string') {
+            angle = {
+                name: options.angle,
+                config: ARTICLE_ANGLES[options.angle] || ARTICLE_ANGLES.analytical
+            };
+        } else if (options.angle && options.angle.name) {
+            // Already an object with name, ensure config exists
+            angle = {
+                name: options.angle.name,
+                config: options.angle.config || ARTICLE_ANGLES[options.angle.name] || ARTICLE_ANGLES.analytical
+            };
+        } else {
+            angle = this.getRandomAngle();
+        }
         
         return {
             topic: topic,

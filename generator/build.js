@@ -8,17 +8,16 @@ const PerformanceMonitor = require('./performance');
 const ErrorLogger = require('./error-logger');
 const PipelineChecker = require('./pipeline-checker');
 const PipelineValidator = require('./pipeline-validator');
+const SiteInstanceManager = require('./site-instance-manager');
+const { ProgressBar } = require('./utils/progress');
 
 // Initialize Error Logger and Validation
 const errorLogger = new ErrorLogger();
 const pipelineChecker = new PipelineChecker({ errorLogger });
 const pipelineValidator = new PipelineValidator({ errorLogger, pipelineChecker });
 
-// Initialize Analytics Manager (Phase 4)
-const analyticsManager = new AnalyticsManager({
-    ga4Id: process.env.GA4_MEASUREMENT_ID || config.analytics?.ga4Id,
-    enabled: config.analytics?.enabled !== false
-});
+// Analytics Manager will be initialized with active config in build function
+let analyticsManager;
 
 // Initialize Performance Monitor (Phase 4)
 const performanceMonitor = new PerformanceMonitor();
@@ -65,17 +64,59 @@ const processTemplate = (template, data) => {
 
     // Replace simple keys: {{key}}
     Object.keys(data).forEach(key => {
-        const regex = new RegExp(`{{${key}}}`, 'g');
-        content = content.replace(regex, data[key]);
+        const value = data[key];
+        if (value !== undefined && value !== null) {
+            // Handle nested objects (e.g., {{site.name}})
+            if (typeof value === 'object' && !Array.isArray(value)) {
+                Object.keys(value).forEach(nestedKey => {
+                    const regex = new RegExp(`\\{\\{${key}\\.${nestedKey}\\}\\}`, 'g');
+                    content = content.replace(regex, String(value[nestedKey] || ''));
+                });
+            } else {
+                const regex = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
+                content = content.replace(regex, String(value));
+            }
+        }
     });
 
     return content;
 };
 
+// Helper to generate navigation items HTML
+const generateNavItems = (categories) => {
+    if (!categories || !Array.isArray(categories)) {
+        return '';
+    }
+    return categories.map(cat => 
+        `<li><a href="#" class="nav-link">${cat}</a></li>`
+    ).join('\n            ');
+};
+
+// Helper to generate categories HTML
+const generateCategories = (categories) => {
+    if (!categories || !Array.isArray(categories)) {
+        return '';
+    }
+    return categories.map(cat => 
+        `<li class="trending-item"><span class="trending-title">${cat}</span></li>`
+    ).join('\n              ');
+};
+
+// Helper to generate footer categories HTML
+const generateFooterCategories = (categories) => {
+    if (!categories || !Array.isArray(categories)) {
+        return '';
+    }
+    return categories.map(cat => 
+        `<li><a href="#">${cat}</a></li>`
+    ).join('\n            ');
+};
+
 // Process Ad Component
-const renderAd = (placementName) => {
-    const adConfig = config.ads.placements[placementName];
-    if (!config.ads.enabled || !adConfig || !adConfig.enabled) return '';
+const renderAd = (placementName, adsConfig = null) => {
+    const adsCfg = adsConfig || config.ads;
+    const adConfig = adsCfg.placements[placementName];
+    if (!adsCfg.enabled || !adConfig || !adConfig.enabled) return '';
 
     const template = readFile(path.join(__dirname, '../templates/components/ad-slot.html'));
 
@@ -90,7 +131,7 @@ const renderAd = (placementName) => {
     let processed = template;
 
     // Handle {{#if testMode}} block
-    if (config.ads.testMode) {
+    if (adsCfg.testMode) {
         processed = processed.replace(/{{#if testMode}}([\s\S]*?){{else}}[\s\S]*?{{\/if}}/g, '$1');
     } else {
         processed = processed.replace(/{{#if testMode}}[\s\S]*?{{else}}([\s\S]*?){{\/if}}/g, '$1');
@@ -109,7 +150,7 @@ const renderAd = (placementName) => {
         id: adConfig.id || `ad-${placementName}`,
         width,
         height,
-        publisherId: config.ads.publisherId
+        publisherId: adsCfg.publisherId
     });
 };
 
@@ -118,6 +159,42 @@ const { generateSitemap, generateRobots } = require('./seo');
 // Main Build Function
 const build = async () => {
     console.log('🏭 Starting Site Factory Build...');
+    
+    // Initialize progress bar if requested
+    let progressBar = null;
+    if (process.env.USE_PROGRESS_BAR === 'true') {
+        progressBar = new ProgressBar({
+            total: 100,
+            format: 'progress [{bar}] {percentage}% | {stage}'
+        });
+        progressBar.start(100, 0, { stage: 'Initializing build...' });
+    }
+    
+    // Check for site instance
+    const siteInstanceName = process.env.SITE_INSTANCE;
+    const siteInstanceManager = new SiteInstanceManager();
+    let activeConfig = config;
+    let distDir = path.join(__dirname, '../dist');
+    
+    if (siteInstanceName) {
+        if (!progressBar) {
+            console.log(`📦 Building site instance: ${siteInstanceName}`);
+        }
+        const instance = siteInstanceManager.setActiveInstance(siteInstanceName);
+        distDir = instance.directory;
+        activeConfig = siteInstanceManager.getMergedConfig(siteInstanceName, config);
+        if (!progressBar) {
+            console.log(`   Output directory: ${distDir}`);
+        }
+    } else {
+        if (!progressBar) {
+            console.log('📦 Building default site (use SITE_INSTANCE env var to build specific instance)');
+        }
+    }
+    
+    if (progressBar) {
+        progressBar.update(10, { stage: 'Pre-flight checks...' });
+    }
     
     // Pre-flight checks (allow warnings but fail on critical errors)
     const preFlight = await pipelineChecker.runPreFlightChecks();
@@ -147,8 +224,11 @@ const build = async () => {
     const validation = await pipelineValidator.validatePipeline('build', []);
 
     try {
+        if (progressBar) {
+            progressBar.update(20, { stage: 'Preparing directories...' });
+        }
+        
         // 1. Prepare Dist Directory
-        const distDir = path.join(__dirname, '../dist');
         if (!fs.existsSync(distDir)) {
             try {
                 fs.mkdirSync(distDir, { recursive: true });
@@ -161,6 +241,10 @@ const build = async () => {
                 });
                 throw error;
             }
+        }
+
+        if (progressBar) {
+            progressBar.update(30, { stage: 'Processing templates...' });
         }
 
         // 2. Process HTML Templates
@@ -183,47 +267,78 @@ const build = async () => {
             throw error;
         }
 
+    // Generate social links array for JSON-LD
+    const socialLinks = [];
+    const social = activeConfig.site.social || {};
+    if (social.twitter) socialLinks.push(`"https://twitter.com/${social.twitter}"`);
+    if (social.linkedin) socialLinks.push(`"https://linkedin.com/company/${social.linkedin}"`);
+    if (social.youtube) socialLinks.push(`"https://youtube.com/@${social.youtube}"`);
+    if (social.facebook) socialLinks.push(`"https://facebook.com/${social.facebook}"`);
+
+    // Prepare site data for template replacement
+    const siteData = {
+        site: {
+            name: activeConfig.site.name,
+            domain: activeConfig.site.domain,
+            description: activeConfig.site.description,
+            keywords: activeConfig.site.keywords,
+            logoText: activeConfig.site.logoText,
+            logoAccent: activeConfig.site.logoAccent,
+            themeColor: activeConfig.site.themeColor,
+            primaryTopic: activeConfig.content.primaryTopic || activeConfig.content.topic,
+            currentYear: new Date().getFullYear(),
+            navItems: generateNavItems(activeConfig.content.subtopics || activeConfig.content.topicCategories || []),
+            categories: generateCategories(activeConfig.content.subtopics || activeConfig.content.topicCategories || []),
+            footerCategories: generateFooterCategories(activeConfig.content.subtopics || activeConfig.content.topicCategories || []),
+            newsletterTitle: activeConfig.site.newsletterTitle || `Stay Updated with ${activeConfig.content.primaryTopic || activeConfig.content.topic} Insights`,
+            newsletterDescription: activeConfig.site.newsletterDescription || `Get the latest articles, tutorials, and best practices delivered to your inbox weekly.`,
+            footerDescription: activeConfig.site.footerDescription || activeConfig.site.description,
+            quickTip: activeConfig.site.quickTip || `<strong>Did you know?</strong> Stay updated with the latest insights and best practices!`,
+            social: activeConfig.site.social || {},
+            socialLinks: `[${socialLinks.join(', ')}]`
+        }
+    };
+
     // Inject SEO Meta Tags
     const seoTags = `
-    <title>${config.site.name} - ${config.content.topic}</title>
-    <meta name="description" content="${config.site.description}">
-    <meta name="keywords" content="${config.site.keywords}">
-    <meta name="theme-color" content="${config.site.themeColor}">
-    <link rel="canonical" href="https://${config.site.domain}/">
-    <meta property="og:title" content="${config.site.name}">
-    <meta property="og:description" content="${config.site.description}">
-    <meta property="og:url" content="https://${config.site.domain}/">
-    <meta property="og:site_name" content="${config.site.name}">
+    <title>${siteData.site.name} - ${siteData.site.primaryTopic}</title>
+    <meta name="description" content="${siteData.site.description}">
+    <meta name="keywords" content="${siteData.site.keywords}">
+    <meta name="theme-color" content="${siteData.site.themeColor}">
+    <link rel="canonical" href="https://${siteData.site.domain}/">
+    <meta property="og:title" content="${siteData.site.name}">
+    <meta property="og:description" content="${siteData.site.description}">
+    <meta property="og:url" content="https://${siteData.site.domain}/">
+    <meta property="og:site_name" content="${siteData.site.name}">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "${config.site.name}",
-      "url": "https://${config.site.domain}/"
+      "name": "${siteData.site.name}",
+      "url": "https://${siteData.site.domain}/"
     }
     </script>
   `;
 
     // Inject Ads
-    const headerAd = renderAd('header');
-    const footerAd = renderAd('footer');
-    const sidebarAd = renderAd('sidebar');
+    const headerAd = renderAd('header', activeConfig.ads);
+    const footerAd = renderAd('footer', activeConfig.ads);
+    const sidebarAd = renderAd('sidebar', activeConfig.ads);
 
     // Replace placeholders in HTML
-    // We need to modify the index.html template first to include these placeholders
-    // For now, we'll do some string injection based on known markers
-
-    let html = indexTemplate;
-
-    // Replace Site Identity
-    html = html.replace('{{site.logoText}}', config.site.logoText);
-    html = html.replace('{{site.logoAccent}}', config.site.logoAccent);
+    let html = processTemplate(indexTemplate, siteData);
 
     // Inject SEO tags into <head>
     html = html.replace('<!-- SEO_TAGS_PLACEHOLDER -->', seoTags);
     
+    // Initialize Analytics Manager with active config
+    analyticsManager = new AnalyticsManager({
+        ga4Id: process.env.GA4_MEASUREMENT_ID || activeConfig.analytics?.ga4Id,
+        enabled: activeConfig.analytics?.enabled !== false
+    });
+
     // Inject Analytics Scripts (Phase 4) - Only if enabled
-    if (config.analytics && config.analytics.enabled) {
+    if (activeConfig.analytics && activeConfig.analytics.enabled) {
         const analyticsScript = analyticsManager.generateGAScript() + '\n' + analyticsManager.generateCustomTrackingScript() + '\n' + performanceMonitor.generateMonitoringScript();
         
         if (html.includes('<!-- ANALYTICS_SCRIPT -->')) {
@@ -250,6 +365,10 @@ const build = async () => {
 
         // Write processed HTML
         writeFile(path.join(distDir, 'index.html'), html);
+
+        if (progressBar) {
+            progressBar.update(50, { stage: 'Copying static assets...' });
+        }
 
         // 3. Copy Static Assets
         // CSS
@@ -301,6 +420,10 @@ const build = async () => {
     const imagesDir = path.join(distDir, 'images');
     if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
 
+    if (progressBar) {
+        progressBar.update(60, { stage: 'Loading articles...' });
+    }
+
     // 4. Generate Article Pages
     const articleTemplate = readFile(path.join(__dirname, '../templates/article.html'));
 
@@ -343,13 +466,19 @@ const build = async () => {
     const seoOptimizer = new SEOOptimizer();
     const qualityScorer = new ArticleQualityScorer();
 
-    articles.forEach(article => {
+    if (progressBar) {
+        progressBar.update(70, { stage: `Generating ${articles.length} article pages...` });
+    }
+
+    articles.forEach((article, index) => {
+        if (progressBar && index % Math.max(1, Math.floor(articles.length / 10)) === 0) {
+            const progress = 70 + Math.floor((index / articles.length) * 20);
+            progressBar.update(progress, { stage: `Generating article ${index + 1}/${articles.length}...` });
+        }
         let pageHtml = articleTemplate;
 
-        // Replace Site Identity
-        pageHtml = pageHtml.replace(/{{site.name}}/g, config.site.name);
-        pageHtml = pageHtml.replace(/{{site.logoText}}/g, config.site.logoText);
-        pageHtml = pageHtml.replace(/{{site.logoAccent}}/g, config.site.logoAccent);
+        // Replace Site Identity using template processor
+        pageHtml = processTemplate(pageHtml, siteData);
 
         // Replace Article Data
         pageHtml = pageHtml.replace(/{{article.title}}/g, article.title);
@@ -367,12 +496,12 @@ const build = async () => {
         }
 
         // Generate Structured Data (JSON-LD) - Phase 1.4
-        const structuredData = seoOptimizer.generateStructuredData(article, config.site);
+        const structuredData = seoOptimizer.generateStructuredData(article, activeConfig.site);
         const structuredDataScript = `<script type="application/ld+json">\n${JSON.stringify(structuredData, null, 2)}\n</script>`;
 
         // Generate Open Graph and Twitter Card meta tags - Phase 1.3
-        const ogTags = seoOptimizer.generateOpenGraphTags(article, config.site);
-        const twitterTags = seoOptimizer.generateTwitterCardTags(article, config.site);
+        const ogTags = seoOptimizer.generateOpenGraphTags(article, activeConfig.site);
+        const twitterTags = seoOptimizer.generateTwitterCardTags(article, activeConfig.site);
 
         // Phase 3 Refinement: Add quality metadata as HTML comment
         const qualityMeta = article.quality ? `
@@ -413,7 +542,7 @@ const build = async () => {
         }
         
         // Inject Analytics Scripts (Phase 4) - Single consolidated injection
-        if (config.analytics && config.analytics.enabled) {
+        if (activeConfig.analytics && activeConfig.analytics.enabled) {
             const analyticsScript = analyticsManager.generateGAScript() + '\n' + analyticsManager.generateCustomTrackingScript() + '\n' + performanceMonitor.generateMonitoringScript();
             
             if (pageHtml.includes('<!-- ANALYTICS_SCRIPT -->')) {
@@ -429,10 +558,10 @@ const build = async () => {
         }
 
         // Inject Ads
-        const headerAd = renderAd('header');
-        const sidebarAd = renderAd('sidebar');
-        const footerAd = renderAd('footer');
-        const inContentAd = renderAd('inContent');
+        const headerAd = renderAd('header', activeConfig.ads);
+        const sidebarAd = renderAd('sidebar', activeConfig.ads);
+        const footerAd = renderAd('footer', activeConfig.ads);
+        const inContentAd = renderAd('inContent', activeConfig.ads);
 
         pageHtml = pageHtml.replace('<!-- HEADER_AD_PLACEHOLDER -->', headerAd);
         pageHtml = pageHtml.replace('<!-- SIDEBAR_AD_PLACEHOLDER -->', sidebarAd);
@@ -443,7 +572,12 @@ const build = async () => {
         const slug = article.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         writeFile(path.join(articlesDir, `${slug}.html`), pageHtml);
     });
-        console.log(`✅ Generated ${articles.length} article pages`);
+        
+        if (progressBar) {
+            progressBar.update(90, { stage: 'Generating SEO files...' });
+        } else {
+            console.log(`✅ Generated ${articles.length} article pages`);
+        }
 
         // 5. Generate SEO Files
         try {
@@ -459,7 +593,16 @@ const build = async () => {
             throw error;
         }
 
-        console.log('✅ Build complete! Output in /dist');
+        // Update last built timestamp if using site instance
+        if (siteInstanceName) {
+            siteInstanceManager.updateLastBuilt(siteInstanceName);
+        }
+        
+        if (progressBar) {
+            progressBar.complete({ stage: 'Build complete!' });
+        } else {
+            console.log(`✅ Build complete! Output in ${distDir}`);
+        }
         
         // Print error report if there were any errors
         const errorSummary = errorLogger.getSummary();

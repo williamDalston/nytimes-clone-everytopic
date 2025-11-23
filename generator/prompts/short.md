@@ -27,11 +27,23 @@ Write a brief, concise article about: {topic}
 2. **Main Section** (300-500 words): Key insights, 1-2 subheadings
 3. **Conclusion** (50-100 words): Summary and takeaway
 
+**CRITICAL QUALITY CONSTRAINTS:**
+
+**Forbidden Phrases (STRICTLY AVOID):**
+- "delve into," "it's important to note," "furthermore," "moreover"
+- "it's worth noting," "it's crucial that," "in conclusion," "to summarize"
+- "as we can see," "various aspects," "numerous studies," "experts agree"
+- "in today's world," "unlock the potential," "game-changer"
+- Any vague language without specific backing
+
 **Style Guidelines:**
-- Concise and to the point
-- Clear, straightforward language
-- Bullet points where helpful
-- Actionable takeaways
+- Concise and to the point—every word must earn its place
+- Clear, straightforward language—no academic jargon
+- Bullet points where helpful—but make each point specific
+- Actionable takeaways—concrete, not abstract
+- **Specificity required**: Name companies, studies, or experts when making claims
+- **Natural voice**: Write as an expert explaining to a colleague
+- **Active voice**: 90% active voice, avoid passive constructions
 
 **Output Format:**
 JSON with:

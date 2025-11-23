@@ -31,13 +31,25 @@ Write a feature-length, narrative-driven article about: {topic}
 6. **Wider Implications** (200-300 words): Broader context
 7. **Conclusion** (200-300 words): Resonant closing
 
+**CRITICAL QUALITY CONSTRAINTS:**
+
+**Forbidden Phrases (STRICTLY AVOID):**
+- "delve into," "it's important to note," "furthermore," "moreover"
+- "it's worth noting," "it's crucial that," "in conclusion," "to summarize"
+- "as we can see," "various aspects," "numerous studies," "experts agree"
+- "in today's world," "unlock the potential," "game-changer"
+- Any vague language that breaks narrative immersion
+
 **Style Guidelines:**
-- Narrative-driven storytelling
-- Rich descriptive language
-- Human-centered perspective
-- Multiple narrative threads
-- Immersive, engaging style
-- Smooth transitions between sections
+- Narrative-driven storytelling with **specific characters, places, and moments**
+- Rich descriptive language with **concrete sensory details** (not "beautiful" but "sunlight filtering through oak leaves")
+- Human-centered perspective with **named individuals and their stories**
+- Multiple narrative threads woven together naturally
+- Immersive, engaging style that **hooks immediately** (no "In this article" openings)
+- Smooth transitions between sections—**no "furthermore" or "additionally"**
+- **Active voice**: 90% active voice for dynamic narrative
+- **Sentence variety**: Mix short punchy sentences with longer flowing passages
+- **Show, don't tell**: Use scenes and details, not abstract descriptions
 
 **Output Format:**
 JSON with:

@@ -8,6 +8,7 @@
     "deploy": "node generator/deploy.js",
     "generate": "node generator/content.js",
     "bulk": "node generator/bulk.js",
+    "create-site": "node generator/create-site.js",
     "report": "node generator/report.js",
     "check": "node generator/check.js",
     "health": "node generator/health-report.js",
@@ -25,8 +26,9 @@
   "author": "EveryTopic",
   "license": "ISC",
   "dependencies": {
-    "openai": "^4.20.0",
+    "@google/generative-ai": "^0.2.0",
+    "cli-progress": "^3.12.0",
     "dotenv": "^16.3.1",
-    "@google/generative-ai": "^0.2.0"
+    "openai": "^4.20.0"
   }
 }

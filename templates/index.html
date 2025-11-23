@@ -5,41 +5,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Your premier source for Power BI insights, tutorials, and best practices. Stay updated with the latest in business intelligence and data analytics.">
-  <meta name="keywords" content="Power BI, Business Intelligence, Data Analytics, DAX, Power Query, Data Visualization">
-  <meta name="author" content="EveryTopic News">
+    content="{{site.description}}">
+  <meta name="keywords" content="{{site.keywords}}">
+  <meta name="author" content="{{site.name}}">
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="EveryTopic News - Power BI Insights & Analytics">
-  <meta property="og:description" content="Your premier source for Power BI insights, tutorials, and best practices.">
-  <meta property="og:url" content="https://everytopic.news">
-  <meta property="og:image" content="https://everytopic.news/images/og-image.jpg">
+  <meta property="og:title" content="{{site.name}} - {{site.primaryTopic}}">
+  <meta property="og:description" content="{{site.description}}">
+  <meta property="og:url" content="https://{{site.domain}}">
+  <meta property="og:image" content="https://{{site.domain}}/images/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="EveryTopic News">
+  <meta property="og:site_name" content="{{site.name}}">
   <meta property="og:locale" content="en_US">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="EveryTopic News - Power BI Insights & Analytics">
-  <meta name="twitter:description" content="Your premier source for Power BI insights, tutorials, and best practices.">
-  <meta name="twitter:image" content="https://everytopic.news/images/twitter-card.jpg">
+  <meta name="twitter:title" content="{{site.name}} - {{site.primaryTopic}}">
+  <meta name="twitter:description" content="{{site.description}}">
+  <meta name="twitter:image" content="https://{{site.domain}}/images/twitter-card.jpg">
 
   <!-- Structured Data - Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "EveryTopic News",
-    "url": "https://everytopic.news",
-    "logo": "https://everytopic.news/images/logo.png",
-    "description": "Your premier source for Power BI insights, tutorials, and best practices.",
-    "sameAs": [
-      "https://twitter.com/everytopic",
-      "https://linkedin.com/company/everytopic",
-      "https://youtube.com/@everytopic"
-    ]
+    "name": "{{site.name}}",
+    "url": "https://{{site.domain}}",
+    "logo": "https://{{site.domain}}/images/logo.png",
+    "description": "{{site.description}}",
+    "sameAs": {{site.socialLinks}}
   }
   </script>
 
@@ -48,13 +44,13 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "EveryTopic News",
-    "url": "https://everytopic.news",
+    "name": "{{site.name}}",
+    "url": "https://{{site.domain}}",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://everytopic.news/search?q={search_term_string}"
+        "urlTemplate": "https://{{site.domain}}/search?q={search_term_string}"
       },
       "query-input": "required name=search_term_string"
     }
@@ -111,10 +107,7 @@
         <nav role="navigation" aria-label="Main navigation">
           <ul class="nav-menu">
             <li><a href="#" class="nav-link active">All Topics</a></li>
-            <li><a href="#" class="nav-link">Latest Updates</a></li>
-            <li><a href="#" class="nav-link">Visualizations</a></li>
-            <li><a href="#" class="nav-link">Advanced Analytics</a></li>
-            <li><a href="#" class="nav-link">Power BI Basics</a></li>
+            {{site.navItems}}
           </ul>
         </nav>
 
@@ -217,21 +210,7 @@
           <div class="sidebar-section">
             <h3 class="sidebar-title">Categories</h3>
             <ul class="trending-list">
-              <li class="trending-item">
-                <span class="trending-title">Power BI Basics</span>
-              </li>
-              <li class="trending-item">
-                <span class="trending-title">Advanced Analytics</span>
-              </li>
-              <li class="trending-item">
-                <span class="trending-title">Data Modeling</span>
-              </li>
-              <li class="trending-item">
-                <span class="trending-title">Visualizations</span>
-              </li>
-              <li class="trending-item">
-                <span class="trending-title">Performance</span>
-              </li>
+              {{site.categories}}
             </ul>
           </div>
 
@@ -240,8 +219,7 @@
             style="background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-accent) 100%); color: white;">
             <h3 class="sidebar-title" style="color: white; border-bottom-color: white;">Quick Tip</h3>
             <p style="font-size: var(--text-sm); line-height: 1.6; margin-bottom: var(--space-4);">
-              <strong>Did you know?</strong> You can use CTRL+F to quickly find specific measures in your Power BI
-              model!
+              {{site.quickTip}}
             </p>
             <button class="btn" style="background: white; color: var(--color-accent); width: 100%;">
               More Tips
@@ -260,8 +238,8 @@
        ============================================ -->
   <section class="newsletter-section">
     <div class="container">
-      <h2>Stay Updated with Power BI Insights</h2>
-      <p>Get the latest articles, tutorials, and best practices delivered to your inbox weekly.</p>
+      <h2>{{site.newsletterTitle}}</h2>
+      <p>{{site.newsletterDescription}}</p>
 
       <form class="newsletter-form" id="newsletter-form">
         <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address"
@@ -285,10 +263,9 @@
 
         <!-- About Section -->
         <div class="footer-section">
-          <h4>About EveryTopic</h4>
+          <h4>About {{site.name}}</h4>
           <p style="color: rgba(255, 255, 255, 0.8); font-size: var(--text-sm); line-height: 1.6;">
-            Your premier destination for Power BI insights, tutorials, and industry best practices. Empowering data
-            professionals worldwide.
+            {{site.footerDescription}}
           </p>
           <div class="social-links">
             <a href="#" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
@@ -331,11 +308,7 @@
         <div class="footer-section">
           <h4>Categories</h4>
           <ul class="footer-links">
-            <li><a href="#">Power BI Basics</a></li>
-            <li><a href="#">Advanced Analytics</a></li>
-            <li><a href="#">Data Modeling</a></li>
-            <li><a href="#">Visualizations</a></li>
-            <li><a href="#">Performance</a></li>
+            {{site.footerCategories}}
           </ul>
         </div>
 
@@ -355,7 +328,7 @@
 
       <!-- Footer Bottom -->
       <div class="footer-bottom">
-        <p>&copy; 2024 EveryTopic News. All rights reserved. | <a href="#"
+        <p>&copy; {{site.currentYear}} {{site.name}}. All rights reserved. | <a href="#"
             style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> | <a href="#"
             style="color: rgba(255, 255, 255, 0.8);">Terms of Service</a></p>
       </div>

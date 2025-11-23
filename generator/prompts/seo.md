@@ -50,5 +50,21 @@ Return the optimized article in HTML format with:
 - Natural keyword integration
 - All improvements made while preserving the human voice and quality
 
-**Important**: Do not sacrifice readability or natural voice for SEO. The content should read naturally while being optimized for search engines.
+**CRITICAL QUALITY CONSTRAINTS:**
+
+**Forbidden Phrases (STRICTLY AVOID - Even in SEO context):**
+- "delve into," "it's important to note," "furthermore," "moreover"
+- "it's worth noting," "it's crucial that," "in conclusion," "to summarize"
+- "as we can see," "various aspects," "numerous studies," "experts agree"
+- "in today's world," "unlock the potential," "game-changer"
+- Any vague language—SEO requires specificity too
+
+**SEO + Quality Balance:**
+- **Natural keyword integration**—never keyword stuffing
+- **Specific examples** enhance SEO (named companies, studies, experts)
+- **Active voice** improves readability scores
+- **Clear structure** helps both readers and search engines
+- **Quality content** ranks better than optimized but generic content
+
+**Important**: Do not sacrifice readability or natural voice for SEO. The content should read naturally while being optimized for search engines. Quality writing with specific examples performs better than generic SEO-optimized content.
 

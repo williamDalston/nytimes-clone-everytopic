@@ -30,13 +30,24 @@ Write a comprehensive, in-depth article about: {topic}
 5. **Implications** (200-300 words): Broader significance
 6. **Conclusion** (150-200 words): Synthesis and forward-looking perspective
 
+**CRITICAL QUALITY CONSTRAINTS:**
+
+**Forbidden Phrases (STRICTLY AVOID):**
+- "delve into," "it's important to note," "furthermore," "moreover"
+- "it's worth noting," "it's crucial that," "in conclusion," "to summarize"
+- "as we can see," "various aspects," "numerous studies," "experts agree"
+- "in today's world," "unlock the potential," "game-changer"
+- Any vague academic language without specific backing
+
 **Style Guidelines:**
-- Rich, detailed content
-- Multiple perspectives
-- In-depth analysis
-- Extensive examples and case studies
-- Well-structured sections
-- Natural flow between ideas
+- Rich, detailed content with **specific examples** (name studies, experts, companies)
+- Multiple perspectives with **named sources** (not "some argue" but "[Name] argues...")
+- In-depth analysis with **concrete data points** (not "many studies" but "a 2023 MIT study")
+- Extensive examples and case studies—**all must be specific and named**
+- Well-structured sections with **natural transitions** (no "furthermore" or "additionally")
+- Natural flow between ideas—read aloud to verify human cadence
+- **Active voice**: 90% active voice throughout
+- **Sentence variety**: Mix short and long sentences, vary beginnings
 
 **Output Format:**
 JSON with:

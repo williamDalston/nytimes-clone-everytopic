@@ -4,6 +4,9 @@ const LLMClient = require('./llm');
 const CostTracker = require('./cost-tracker');
 const ArticleQualityScorer = require('./quality');
 const { TopicManager, ARTICLE_STYLES, ARTICLE_ANGLES } = require('./topics');
+const { VoiceSystem } = require('./voice-system');
+const { TemplateManager } = require('./templates');
+const { validateTopic, validateArticleStructure, sanitizeTopic } = require('./utils/validation');
 const ErrorLogger = require('./error-logger');
 const PipelineValidator = require('./pipeline-validator');
 
@@ -38,9 +41,6 @@ const voiceSystem = new VoiceSystem();
 // Initialize Template Manager
 const templateManager = new TemplateManager();
 
-// Initialize Quality Scorer
-const qualityScorer = new ArticleQualityScorer();
-
 /**
  * Generate article using real LLM (with optional multi-stage pipeline)
  * Now supports TopicManager topics with varying styles and lengths
@@ -48,10 +48,10 @@ const qualityScorer = new ArticleQualityScorer();
  */
 const generateArticle = async (topicOrConfig, options = {}) => {
     // Phase 2: Input validation
+    let topic, articleConfig, topicDisplay, styleName, angleName, lensName;
+    
     try {
         // Handle both topic strings and topic config objects
-        let topic, articleConfig;
-        
         if (typeof topicOrConfig === 'string') {
             // Legacy: just a topic string
             topic = sanitizeTopic(topicOrConfig);
@@ -70,17 +70,36 @@ const generateArticle = async (topicOrConfig, options = {}) => {
             }
         }
         
-        const topicDisplay = articleConfig.topic?.title || articleConfig.topic?.slug || topic;
+        topicDisplay = articleConfig.topic?.title || articleConfig.topic?.slug || topic;
         
         // Validate topic display
         if (!topicDisplay || typeof topicDisplay !== 'string' || topicDisplay.trim().length === 0) {
             throw new Error('Invalid topic: topic display name is required');
         }
-    const styleName = articleConfig.style?.name || 'medium';
-    const angleName = articleConfig.angle?.name || 'analytical';
-    const lensName = articleConfig.lens?.name || articleConfig.angle?.name || 'analytical';
-    
-    console.log(`🤖 Generating ${styleName} article (${lensName} lens, ${angleName} angle) for: ${topicDisplay}...`);
+        
+        styleName = articleConfig.style?.name || 'medium';
+        angleName = articleConfig.angle?.name || 'analytical';
+        lensName = articleConfig.lens?.name || articleConfig.angle?.name || 'analytical';
+        
+        console.log(`🤖 Generating ${styleName} article (${lensName} lens, ${angleName} angle) for: ${topicDisplay}...`);
+    } catch (validationError) {
+        // Handle validation errors
+        console.error(`❌ Validation error: ${validationError.message}`);
+        const fallbackCategory = getCategoryFromTopic(typeof topicOrConfig === 'string' ? topicOrConfig : 'Unknown') || 'AI Insights';
+        return {
+            title: `Article Generation Error`,
+            excerpt: `We encountered a validation error.`,
+            content: `<p>We encountered a validation error generating this article.</p><p>Error: ${validationError.message}</p>`,
+            author: "AI Analyst",
+            date: new Date().toISOString().split('T')[0],
+            readTime: "5 min read",
+            category: fallbackCategory.charAt(0).toUpperCase() + fallbackCategory.slice(1),
+            style: 'medium',
+            angle: 'analytical',
+            wordCount: 0,
+            topicSlug: typeof topicOrConfig === 'string' ? topicOrConfig : 'unknown'
+        };
+    }
 
     try {
         // Use style-specific prompt if available
@@ -142,7 +161,8 @@ const generateArticle = async (topicOrConfig, options = {}) => {
 
         // Ensure all required fields are present with style-specific defaults
         const readTime = articleConfig.readTime || article.readTime || `${Math.ceil((articleConfig.wordCount || 800) / 200)} min read`;
-        const category = articleConfig.topic?.category || article.category || getCategoryFromTopic(topicDisplay);
+        // Use category from above (line 94) or fallback to article.category
+        const finalCategory = articleConfig.topic?.category || article.category || category || getCategoryFromTopic(topicDisplay);
         
         // Build article object
         const finalArticle = {
@@ -152,7 +172,7 @@ const generateArticle = async (topicOrConfig, options = {}) => {
             author: article.author || "AI Analyst",
             date: article.date || new Date().toISOString().split('T')[0],
             readTime: readTime,
-            category: category.charAt(0).toUpperCase() + category.slice(1), // Capitalize category
+            category: finalCategory.charAt(0).toUpperCase() + finalCategory.slice(1), // Capitalize category
             style: styleName,
             angle: angleName,
             wordCount: articleConfig.wordCount || 0,
@@ -196,15 +216,12 @@ const generateArticle = async (topicOrConfig, options = {}) => {
         }
 
         return finalArticle;
-    } catch (validationError) {
-        // Handle validation errors separately
-        if (validationError.message.includes('must be') || validationError.message.includes('Invalid topic')) {
-            console.error(`❌ Validation error: ${validationError.message}`);
-            throw validationError;
-        }
-        // Re-throw other errors to be handled by outer catch
-        throw validationError;
     } catch (error) {
+        // Check if it's a validation error
+        if (error.message && (error.message.includes('must be') || error.message.includes('Invalid topic'))) {
+            console.error(`❌ Validation error: ${error.message}`);
+            throw error;
+        }
         errorLogger.log(error, {
             module: 'content',
             operation: 'generate-article',
@@ -243,7 +260,7 @@ const generateArticle = async (topicOrConfig, options = {}) => {
         }
         
         // Final fallback to basic structure if generation fails
-        const fallbackCategory = articleConfig.topic?.category || options.category || getCategoryFromTopic(topicDisplay);
+        const fallbackCategory = articleConfig.topic?.category || options.category || getCategoryFromTopic(topicDisplay) || 'AI Insights';
         
         return {
             title: `${topicDisplay}: Understanding the Essentials`,
@@ -282,8 +299,6 @@ const getCategoryFromTopic = (topic) => {
 };
 
 const ImageGenerator = require('./image-gen');
-const ArticleQualityScorer = require('./quality');
-const { TemplateManager } = require('./templates');
 
 // Initialize Image Generator (Nano Banana)
 const imageGenerator = new ImageGenerator({

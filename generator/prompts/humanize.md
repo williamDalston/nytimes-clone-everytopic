@@ -25,11 +25,39 @@ Revise the following article about "{topic}" line-by-line to create natural, hum
 - Ensure each paragraph flows naturally into the next
 - Read aloud in your head—does it sound like a real person talking?
 
-**Remove AI Patterns:**
-- Eliminate phrases like "delve into," "it's worth noting," "it is crucial that"
-- Replace formal academic language with natural professional voice
-- Vary sentence beginnings
-- Use active voice over passive when possible
+**CRITICAL: Remove ALL AI Patterns**
+
+**Forbidden Phrases (ELIMINATE IMMEDIATELY):**
+- "delve into," "delve deeper," "it's important to note," "it is important to note"
+- "furthermore," "moreover," "additionally," "it's worth noting," "it is worth noting"
+- "it's crucial that," "it is crucial that," "in conclusion," "to conclude"
+- "in summary," "to summarize," "as we can see," "as we have seen"
+- "it becomes clear," "it is clear that," "one must consider," "we must consider"
+- "it is evident that," "it becomes evident," "this highlights," "this emphasizes"
+- "various aspects," "various factors," "numerous studies," "research suggests"
+- "experts agree," "many people believe," "some argue," "it is widely known"
+- "in today's world," "in today's society," "in the modern era"
+- "unlock the potential," "harness the power," "game-changer," "cutting-edge"
+- "In this article, we will..." or any weak academic openings
+
+**Required Humanization:**
+1. **Replace ALL forbidden phrases** with natural alternatives
+2. **Vary sentence beginnings**—never repeat the same pattern 3+ times
+3. **Use active voice** 90% of the time (replace all passive constructions)
+4. **Add specificity**—replace vague terms with concrete examples
+5. **Natural contractions**—use "it's" not "it is" in casual contexts
+6. **Strategic fragments**—occasional sentence fragments for emphasis
+7. **Emotional undertones**—subtle passion, curiosity, or humor where appropriate
+8. **Conversational flow**—read aloud, does it sound like a real person?
+
+**Quality Checklist:**
+- [ ] Zero forbidden phrases remain
+- [ ] Sentence beginnings vary throughout
+- [ ] Active voice used consistently
+- [ ] Natural, human cadence maintained
+- [ ] Specific examples replace vague language
+- [ ] Professional yet warm tone
+- [ ] Reads like expert human writer, not AI
 
 **Output:**
 Humanized HTML article that maintains all content but reads like it was written by an expert human writer.

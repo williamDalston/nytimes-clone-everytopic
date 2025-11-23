@@ -179,82 +179,630 @@
         "metadata": {}
       },
       "metadata": {}
+    },
+    {
+      "id": "1763879190486-hfh3wne3y",
+      "timestamp": "2025-11-23T06:26:30.486Z",
+      "message": "Cannot read properties of undefined (reading 'wordCount')",
+      "stack": "TypeError: Cannot read properties of undefined (reading 'wordCount')\n    at TopicManager.generateArticleConfig (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/topics.js:343:30)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:87:64)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "pipeline",
+      "severity": "critical",
+      "context": {
+        "module": "bulk",
+        "operation": "bulk-entry",
+        "category": "pipeline",
+        "severity": "critical"
+      },
+      "metadata": {}
+    },
+    {
+      "id": "1763879206754-x8eris3fc",
+      "timestamp": "2025-11-23T06:26:46.754Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879206755-3yf8cx8zj",
+      "timestamp": "2025-11-23T06:26:46.755Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879206756-17qf34h1z",
+      "timestamp": "2025-11-23T06:26:46.756Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879206756-b601522ky",
+      "timestamp": "2025-11-23T06:26:46.756Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879209398-xx89tiexu",
+      "timestamp": "2025-11-23T06:26:49.398Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879209399-mkg4lmi4s",
+      "timestamp": "2025-11-23T06:26:49.399Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879209399-zmajn0ilq",
+      "timestamp": "2025-11-23T06:26:49.399Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879209399-pua4pn953",
+      "timestamp": "2025-11-23T06:26:49.399Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879211856-gpya061m4",
+      "timestamp": "2025-11-23T06:26:51.856Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:320:65\n    at Array.forEach (<anonymous>)\n    at build (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:319:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "index": 0,
+          "operation": "build-article-pages"
+        }
+      },
+      "metadata": {
+        "index": 0,
+        "operation": "build-article-pages"
+      }
+    },
+    {
+      "id": "1763879211856-ieyl48kca",
+      "timestamp": "2025-11-23T06:26:51.856Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:320:65\n    at Array.forEach (<anonymous>)\n    at build (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:319:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "index": 1,
+          "operation": "build-article-pages"
+        }
+      },
+      "metadata": {
+        "index": 1,
+        "operation": "build-article-pages"
+      }
+    },
+    {
+      "id": "1763879220476-a3gedg4g2",
+      "timestamp": "2025-11-23T06:27:00.476Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879220477-dogs95qd9",
+      "timestamp": "2025-11-23T06:27:00.477Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879220477-hktlx5hcj",
+      "timestamp": "2025-11-23T06:27:00.477Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879220477-uzouh6zir",
+      "timestamp": "2025-11-23T06:27:00.477Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879220478-auc0pbnig",
+      "timestamp": "2025-11-23T06:27:00.478Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 3,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 3,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879220478-pajjxrv76",
+      "timestamp": "2025-11-23T06:27:00.478Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 3,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 3,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879220715-9bygjag0v",
+      "timestamp": "2025-11-23T06:27:00.715Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:320:65\n    at Array.forEach (<anonymous>)\n    at build (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:319:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "index": 0,
+          "operation": "build-article-pages"
+        }
+      },
+      "metadata": {
+        "index": 0,
+        "operation": "build-article-pages"
+      }
+    },
+    {
+      "id": "1763879220716-jn0935oca",
+      "timestamp": "2025-11-23T06:27:00.716Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:320:65\n    at Array.forEach (<anonymous>)\n    at build (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:319:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "index": 1,
+          "operation": "build-article-pages"
+        }
+      },
+      "metadata": {
+        "index": 1,
+        "operation": "build-article-pages"
+      }
+    },
+    {
+      "id": "1763879220716-m34h4ec2i",
+      "timestamp": "2025-11-23T06:27:00.716Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:320:65\n    at Array.forEach (<anonymous>)\n    at build (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/build.js:319:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "index": 2,
+          "operation": "build-article-pages"
+        }
+      },
+      "metadata": {
+        "index": 2,
+        "operation": "build-article-pages"
+      }
+    },
+    {
+      "id": "1763879271738-p6sazou9i",
+      "timestamp": "2025-11-23T06:27:51.738Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879272316-mmoa1hksf",
+      "timestamp": "2025-11-23T06:27:52.316Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 1,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 1,
+        "operation": "final-article-validation"
+      }
+    },
+    {
+      "id": "1763879272817-xcvxe0kqk",
+      "timestamp": "2025-11-23T06:27:52.817Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:247:57)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "topic": "Coastal Erosion",
+          "operation": "bulk-generation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "topic": "Coastal Erosion",
+        "operation": "bulk-generation"
+      }
+    },
+    {
+      "id": "1763879272818-cx3105apv",
+      "timestamp": "2025-11-23T06:27:52.818Z",
+      "message": "Article content seems too short (less than 100 characters)",
+      "stack": "Error: Article content seems too short (less than 100 characters)\n    at /Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:187:39\n    at Array.forEach (<anonymous>)\n    at PipelineValidator.validateArticle (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-validator.js:186:37)\n    at run (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/bulk.js:319:55)",
+      "category": "validation",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-validator",
+        "operation": "validate-article",
+        "category": "validation",
+        "severity": "warning",
+        "metadata": {
+          "articleId": 2,
+          "operation": "final-article-validation"
+        }
+      },
+      "metadata": {
+        "articleId": 2,
+        "operation": "final-article-validation"
+      }
     }
   ],
   "summary": {
-    "total": 9,
+    "total": 33,
     "byCategory": {
-      "pipeline": 9
+      "pipeline": 10,
+      "validation": 23
     },
     "bySeverity": {
       "error": 3,
-      "warning": 6
+      "warning": 29,
+      "critical": 1
     },
     "recent": [
       {
-        "id": "1763878495605-wk2isr623",
-        "message": "Placeholder API keys (not allowed in production): api.llm",
-        "category": "pipeline",
-        "severity": "error",
-        "timestamp": "2025-11-23T06:14:55.605Z"
-      },
-      {
-        "id": "1763878495606-rnu0exsq4",
-        "message": "LLM API key not set, will use dry-run mode",
-        "category": "pipeline",
+        "id": "1763879220477-uzouh6zir",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:14:55.606Z"
+        "timestamp": "2025-11-23T06:27:00.477Z"
       },
       {
-        "id": "1763878495606-7bfup2inv",
-        "message": "Image generation API key not set, will use fallback images",
-        "category": "pipeline",
+        "id": "1763879220478-auc0pbnig",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:14:55.606Z"
+        "timestamp": "2025-11-23T06:27:00.478Z"
       },
       {
-        "id": "1763878506944-lf6pvmjct",
-        "message": "Placeholder API keys (not allowed in production): api.llm",
-        "category": "pipeline",
-        "severity": "error",
-        "timestamp": "2025-11-23T06:15:06.944Z"
-      },
-      {
-        "id": "1763878506945-c5aoip25k",
-        "message": "LLM API key not set, will use dry-run mode",
-        "category": "pipeline",
+        "id": "1763879220478-pajjxrv76",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:15:06.945Z"
+        "timestamp": "2025-11-23T06:27:00.478Z"
       },
       {
-        "id": "1763878506945-0ruz3079p",
-        "message": "Image generation API key not set, will use fallback images",
-        "category": "pipeline",
+        "id": "1763879220715-9bygjag0v",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:15:06.945Z"
+        "timestamp": "2025-11-23T06:27:00.715Z"
       },
       {
-        "id": "1763878541130-quhzp2asf",
-        "message": "Placeholder API keys (not allowed in production): api.llm",
-        "category": "pipeline",
-        "severity": "error",
-        "timestamp": "2025-11-23T06:15:41.130Z"
-      },
-      {
-        "id": "1763878541131-iiwj85dyh",
-        "message": "LLM API key not set, will use dry-run mode",
-        "category": "pipeline",
+        "id": "1763879220716-jn0935oca",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:15:41.131Z"
+        "timestamp": "2025-11-23T06:27:00.716Z"
       },
       {
-        "id": "1763878541131-s2oqy2tl6",
-        "message": "Image generation API key not set, will use fallback images",
-        "category": "pipeline",
+        "id": "1763879220716-m34h4ec2i",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
         "severity": "warning",
-        "timestamp": "2025-11-23T06:15:41.131Z"
+        "timestamp": "2025-11-23T06:27:00.716Z"
+      },
+      {
+        "id": "1763879271738-p6sazou9i",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:27:51.738Z"
+      },
+      {
+        "id": "1763879272316-mmoa1hksf",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:27:52.316Z"
+      },
+      {
+        "id": "1763879272817-xcvxe0kqk",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:27:52.817Z"
+      },
+      {
+        "id": "1763879272818-cx3105apv",
+        "message": "Article content seems too short (less than 100 characters)",
+        "category": "validation",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:27:52.818Z"
       }
     ]
   },
-  "timestamp": "2025-11-23T06:15:41.131Z"
+  "timestamp": "2025-11-23T06:27:52.818Z"
 }

@@ -434,7 +434,7 @@ function initNewsletter() {
         
         // Simulate form submission
         setTimeout(() => {
-            showNewsletterMessage(`Thank you for subscribing! We'll send Power BI insights to ${email}`, 'success');
+            showNewsletterMessage(`Thank you for subscribing! We'll send you the latest insights to ${email}`, 'success');
             newsletterForm.reset();
             submitButton.textContent = originalText;
             submitButton.disabled = false;

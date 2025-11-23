@@ -4,6 +4,7 @@ require('dotenv').config(); // Load environment variables first
 const config = require('./config');
 const { generateArticle, generateImage, expandTopics } = require('./content');
 const { TopicManager } = require('./topics');
+const { LensSystem } = require('./lens-system');
 const CostTracker = require('./cost-tracker');
 const ErrorLogger = require('./error-logger');
 const PipelineChecker = require('./pipeline-checker');
@@ -51,14 +52,16 @@ const run = async () => {
         budget: process.env.MONTHLY_BUDGET ? parseFloat(process.env.MONTHLY_BUDGET) : null
     });
 
-    // Initialize Topic Manager
+    // Initialize Topic Manager and Lens System
     const topicManager = new TopicManager();
+    const lensSystem = new LensSystem();
+    const useMultiplePerspectives = process.env.USE_MULTIPLE_PERSPECTIVES !== 'false'; // Default: true
 
     // 1. Get Topics
     let allTopicConfigs = [];
 
     if (useSovereignMindTopics) {
-        // Use Sovereign Mind topics with varying styles and angles
+        // Use Sovereign Mind topics with varying styles, angles, and lenses/perspectives
         console.log(`📚 Using Sovereign Mind topics (${topicManager.getTotalCount()} total)...`);
         
         const allTopics = topicManager.getAllTopics();
@@ -74,13 +77,40 @@ const run = async () => {
             for (const topic of selectedTopics) {
                 const topicObj = topicManager.getTopicBySlug(topic.slug);
                 if (topicObj) {
-                    // Generate article config with varying styles and angles
-                    const articleConfig = topicManager.generateArticleConfig(topicObj, {
-                        style: varyStyles ? undefined : 'medium', // Random if varyStyles
-                        angle: varyStyles ? undefined : 'analytical' // Random if varyStyles
-                    });
-                    
-                    allTopicConfigs.push(articleConfig);
+                    if (useMultiplePerspectives) {
+                        // Generate multiple perspectives (different lenses) for this topic
+                        const perspectives = lensSystem.getMultiplePerspectives(topicObj, 3, {
+                            varyStyles: varyStyles
+                        });
+                        
+                        for (const perspective of perspectives) {
+                            const articleConfig = topicManager.generateArticleConfig(topicObj, {
+                                style: perspective.style?.name || (varyStyles ? undefined : 'medium'),
+                                angle: perspective.lens?.name || (varyStyles ? undefined : 'analytical')
+                            });
+                            
+                            // Add lens/perspective information
+                            articleConfig.lens = perspective.lens;
+                            articleConfig.perspective = perspective.perspective;
+                            articleConfig.totalPerspectives = perspective.totalPerspectives;
+                            
+                            allTopicConfigs.push(articleConfig);
+                            
+                            if (allTopicConfigs.length >= maxArticles) break;
+                        }
+                    } else {
+                        // Single perspective per topic (legacy behavior)
+                        const articleConfig = topicManager.generateArticleConfig(topicObj, {
+                            style: varyStyles ? undefined : 'medium',
+                            angle: varyStyles ? undefined : 'analytical'
+                        });
+                        
+                        // Add a random lens for variety
+                        const lens = lensSystem.getRandomLens();
+                        articleConfig.lens = lens;
+                        
+                        allTopicConfigs.push(articleConfig);
+                    }
                     
                     if (allTopicConfigs.length >= maxArticles) break;
                 }
@@ -92,15 +122,48 @@ const run = async () => {
         // Fill remaining with random topics if needed
         while (allTopicConfigs.length < maxArticles && allTopicConfigs.length < allTopics.length) {
             const randomTopic = topicManager.getRandomTopic();
-            const articleConfig = topicManager.generateArticleConfig(randomTopic, {
-                style: varyStyles ? undefined : 'medium',
-                angle: varyStyles ? undefined : 'analytical'
-            });
             
-            // Avoid duplicates
-            if (!allTopicConfigs.find(c => c.topic.slug === articleConfig.topic.slug)) {
-                allTopicConfigs.push(articleConfig);
+            if (useMultiplePerspectives && allTopicConfigs.length + 3 <= maxArticles) {
+                // Add multiple perspectives
+                const perspectives = lensSystem.getMultiplePerspectives(randomTopic, 3, {
+                    varyStyles: varyStyles
+                });
+                
+                for (const perspective of perspectives) {
+                    const articleConfig = topicManager.generateArticleConfig(randomTopic, {
+                        style: perspective.style?.name || 'medium',
+                        angle: perspective.lens?.name || 'analytical'
+                    });
+                    
+                    articleConfig.lens = perspective.lens;
+                    articleConfig.perspective = perspective.perspective;
+                    articleConfig.totalPerspectives = perspective.totalPerspectives;
+                    
+                    // Avoid duplicates
+                    if (!allTopicConfigs.find(c => 
+                        c.topic.slug === articleConfig.topic.slug && 
+                        c.perspective === articleConfig.perspective
+                    )) {
+                        allTopicConfigs.push(articleConfig);
+                    }
+                }
+            } else {
+                // Single perspective
+                const articleConfig = topicManager.generateArticleConfig(randomTopic, {
+                    style: varyStyles ? undefined : 'medium',
+                    angle: varyStyles ? undefined : 'analytical'
+                });
+                
+                const lens = lensSystem.getRandomLens();
+                articleConfig.lens = lens;
+                
+                // Avoid duplicates
+                if (!allTopicConfigs.find(c => c.topic.slug === articleConfig.topic.slug)) {
+                    allTopicConfigs.push(articleConfig);
+                }
             }
+            
+            if (allTopicConfigs.length >= maxArticles) break;
         }
     } else {
         // Legacy: Use old topic expansion method

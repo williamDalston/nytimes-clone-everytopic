@@ -77,8 +77,9 @@ const generateArticle = async (topicOrConfig, options = {}) => {
         }
     const styleName = articleConfig.style?.name || 'medium';
     const angleName = articleConfig.angle?.name || 'analytical';
+    const lensName = articleConfig.lens?.name || articleConfig.angle?.name || 'analytical';
     
-    console.log(`🤖 Generating ${styleName} article (${angleName} angle) for: ${topicDisplay}...`);
+    console.log(`🤖 Generating ${styleName} article (${lensName} lens, ${angleName} angle) for: ${topicDisplay}...`);
 
     try {
         // Use style-specific prompt if available
@@ -88,11 +89,17 @@ const generateArticle = async (topicOrConfig, options = {}) => {
         // Check if multi-stage pipeline is requested
         const usePipeline = options.usePipeline !== false && !config.llm.dryRun;
         
-        // Build enhanced prompt with style and angle
+        // Build enhanced prompt with style, angle, and lens
+        const lensPrompt = articleConfig.lens 
+            ? `\n\n**Lens/Perspective:** ${articleConfig.lens.name}\n${articleConfig.lens.description}\n\nApproach this topic from this perspective:\n- Focus: ${articleConfig.lens.focus?.join(', ') || 'general analysis'}\n- Question: ${articleConfig.lens.question || 'What insights can we gain?'}\n- Voice: Write as a ${articleConfig.lens.voice || 'expert'}\n- Tone: ${articleConfig.lens.tone || 'balanced'}\n`
+            : '';
+        
         const enhancedOptions = {
             ...options,
             style: stylePrompt,
             angle: anglePrompt,
+            lens: lensName,
+            lensPrompt: lensPrompt,
             wordCount: articleConfig.wordCount,
             sections: articleConfig.sections,
             category: articleConfig.topic?.category || options.category || getCategoryFromTopic(topic),

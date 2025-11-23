@@ -1,0 +1,39 @@
+# Environment variables - NEVER commit API keys
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+*.log
+*.error
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Cache and temporary files
+data/cache/
+data/logs/
+.cache/
+tmp/
+temp/
+
+# Cost tracking (may contain sensitive data)
+data/costs.json
+
+# Analytics data
+data/analytics-*.json
+

@@ -8,8 +8,10 @@ Write a brief, concise article about: {topic}
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
-{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Keep it concise while maintaining your unique lens/angle.{/if}
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Keep it concise while maintaining your unique lens/angle and voice.{/if}
 
 **Angle: {angle}**
 {tone}

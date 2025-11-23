@@ -2,6 +2,8 @@ Write a comprehensive, engaging article about: {topic}
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
 {if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Approach it from your unique lens/angle.{/if}
 

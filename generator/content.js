@@ -31,8 +31,9 @@ const llmClient = new LLMClient({
     costTracker: costTracker // Phase 3: Add cost tracking
 });
 
-// Initialize Topic Manager
+// Initialize Topic Manager and Voice System
 const topicManager = new TopicManager();
+const voiceSystem = new VoiceSystem();
 
 // Initialize Template Manager
 const templateManager = new TemplateManager();
@@ -89,7 +90,10 @@ const generateArticle = async (topicOrConfig, options = {}) => {
         // Check if multi-stage pipeline is requested
         const usePipeline = options.usePipeline !== false && !config.llm.dryRun;
         
-        // Build enhanced prompt with style, angle, and lens
+        // Build enhanced prompt with style, angle, lens, and voice
+        const category = articleConfig.topic?.category || options.category || getCategoryFromTopic(topic);
+        const voiceGuidance = voiceSystem.generateVoiceGuidance(category);
+        
         const lensPrompt = articleConfig.lens 
             ? `\n\n**Lens/Perspective:** ${articleConfig.lens.name}\n${articleConfig.lens.description}\n\nApproach this topic from this perspective:\n- Focus: ${articleConfig.lens.focus?.join(', ') || 'general analysis'}\n- Question: ${articleConfig.lens.question || 'What insights can we gain?'}\n- Voice: Write as a ${articleConfig.lens.voice || 'expert'}\n- Tone: ${articleConfig.lens.tone || 'balanced'}\n`
             : '';
@@ -100,9 +104,10 @@ const generateArticle = async (topicOrConfig, options = {}) => {
             angle: anglePrompt,
             lens: lensName,
             lensPrompt: lensPrompt,
+            voiceGuidance: voiceGuidance,
+            category: category,
             wordCount: articleConfig.wordCount,
             sections: articleConfig.sections,
-            category: articleConfig.topic?.category || options.category || getCategoryFromTopic(topic),
             topicObject: articleConfig.topic
         };
         

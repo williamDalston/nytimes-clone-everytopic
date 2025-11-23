@@ -386,7 +386,7 @@ Output format: JSON with fields: title, excerpt, content (HTML), author, categor
                     }
                 }
 
-                // Build variables for prompt (including lens/perspective if available)
+                // Build variables for prompt (including lens/perspective/voice if available)
                 const promptVariables = {
                     topic: i === 0 ? topic : currentContent, // Use original topic for first stage
                     previousContent: currentContent
@@ -402,6 +402,10 @@ Output format: JSON with fields: title, excerpt, content (HTML), author, categor
                 if (options.perspective) {
                     promptVariables.perspective = options.perspective;
                     promptVariables.totalPerspectives = options.totalPerspectives;
+                }
+                // Add voice guidance for consistent, enjoyable voice
+                if (options.voiceGuidance) {
+                    promptVariables.voiceGuidance = options.voiceGuidance;
                 }
                 
                 // Load prompt template

@@ -5,6 +5,8 @@ You are enhancing an article draft about "{topic}".
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
 {if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Deepen your unique lens/angle while maintaining coherence with previous stages.{/if}
 

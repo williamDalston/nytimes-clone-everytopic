@@ -2,6 +2,8 @@ Take the blueprint you created for "{topic}" and expand it into a comprehensive 
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
 {if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Maintain your unique lens/angle while building on the blueprint structure.{/if}
 

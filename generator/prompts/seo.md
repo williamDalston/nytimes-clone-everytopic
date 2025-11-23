@@ -5,8 +5,10 @@ Optimize the following article about "{topic}" for maximum SEO performance while
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
-{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Optimize for SEO while preserving your unique lens/angle.{/if}
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Optimize for SEO while preserving your unique lens/angle and voice.{/if}
 
 **SEO Optimization Requirements:**
 

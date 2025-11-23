@@ -8,8 +8,10 @@ Write a comprehensive, in-depth article about: {topic}
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
-{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Explore deeply from your unique lens/angle while maintaining comprehensiveness.{/if}
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Explore deeply from your unique lens/angle while maintaining comprehensiveness and voice consistency.{/if}
 
 **Angle: {angle}**
 {tone}

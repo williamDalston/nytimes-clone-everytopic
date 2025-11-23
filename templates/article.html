@@ -270,10 +270,14 @@
 
         .article-body {
             font-size: 1.125rem;
-            line-height: 1.8;
+            line-height: 1.75;
             color: var(--color-text);
             position: relative;
             z-index: 10; /* Ensure content stays above ads */
+            max-width: 65ch;
+            margin: 0 auto;
+            font-family: var(--font-body);
+            letter-spacing: 0.01em;
         }
 
         .article-body p {

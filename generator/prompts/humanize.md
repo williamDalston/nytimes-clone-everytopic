@@ -5,6 +5,8 @@ Revise the following article about "{topic}" line-by-line to create natural, hum
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
 {if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Maintain your unique lens/voice while making the writing more human and natural.{/if}
 

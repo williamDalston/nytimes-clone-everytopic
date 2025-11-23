@@ -8,8 +8,10 @@ Write a feature-length, narrative-driven article about: {topic}
 
 {lensPrompt}
 
+{voiceGuidance}
+
 **Perspective Context:**
-{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Craft a compelling narrative from your unique lens/angle while maintaining depth and immersion.{/if}
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Craft a compelling narrative from your unique lens/angle while maintaining depth, immersion, and voice consistency.{/if}
 
 **Angle: {angle}**
 {tone}

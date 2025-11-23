@@ -1,0 +1,19 @@
+{
+  "name": "everytopic-site-factory",
+  "version": "1.0.0",
+  "description": "Static site generator for niche news sites",
+  "main": "generator/build.js",
+  "scripts": {
+    "build": "node generator/build.js",
+    "deploy": "node generator/deploy.js",
+    "generate": "node generator/content.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "static-site-generator",
+    "news",
+    "seo"
+  ],
+  "author": "EveryTopic",
+  "license": "ISC"
+}

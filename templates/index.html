@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Your premier source for Power BI insights, tutorials, and best practices. Stay updated with the latest in business intelligence and data analytics.">
+  <meta name="keywords" content="Power BI, Business Intelligence, Data Analytics, DAX, Power Query, Data Visualization">
+  <meta name="author" content="EveryTopic News">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EveryTopic News - Power BI Insights & Analytics">
+  <meta property="og:description" content="Your premier source for Power BI insights, tutorials, and best practices.">
+
+  <!-- SEO_TAGS_PLACEHOLDER -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- ============================================
+       HEADER & NAVIGATION
+       ============================================ -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-container">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          {{site.logoText}}<span class="logo-accent">{{site.logoAccent}}</span>
+        </a>
+
+        <!-- Navigation Menu -->
+        <nav>
+          <ul class="nav-menu">
+            <li><a href="#" class="nav-link active">All Topics</a></li>
+            <li><a href="#" class="nav-link">Latest Updates</a></li>
+            <li><a href="#" class="nav-link">Visualizations</a></li>
+            <li><a href="#" class="nav-link">Advanced Analytics</a></li>
+            <li><a href="#" class="nav-link">Power BI Basics</a></li>
+          </ul>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="header-actions">
+          <button class="search-btn" id="search-btn" aria-label="Search">
+            🔍
+          </button>
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+            🌙
+          </button>
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+            ☰
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HEADER_AD_PLACEHOLDER -->
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero">
+    <div class="container">
+      <!-- Hero content will be dynamically inserted by JavaScript -->
+    </div>
+  </section>
+
+  <!-- ============================================
+       MAIN CONTENT AREA
+       ============================================ -->
+  <main class="articles-section">
+    <div class="container">
+
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">Latest Articles</h2>
+        <a href="#" class="view-all-link">View All →</a>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="main-content">
+
+        <!-- Articles Grid -->
+        <div class="articles-grid" id="articles-grid">
+          <!-- Articles will be dynamically inserted by JavaScript -->
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+          <!-- SIDEBAR_AD_PLACEHOLDER -->
+
+          <!-- Trending Section -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trending Now</h3>
+            <ul class="trending-list" id="trending-list">
+              <!-- Trending items will be dynamically inserted by JavaScript -->
+            </ul>
+          </div>
+
+          <!-- Editor's Picks Section -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Categories</h3>
+            <ul class="trending-list">
+              <li class="trending-item">
+                <span class="trending-title">Power BI Basics</span>
+              </li>
+              <li class="trending-item">
+                <span class="trending-title">Advanced Analytics</span>
+              </li>
+              <li class="trending-item">
+                <span class="trending-title">Data Modeling</span>
+              </li>
+              <li class="trending-item">
+                <span class="trending-title">Visualizations</span>
+              </li>
+              <li class="trending-item">
+                <span class="trending-title">Performance</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Quick Tips Section -->
+          <div class="sidebar-section"
+            style="background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-accent) 100%); color: white;">
+            <h3 class="sidebar-title" style="color: white; border-bottom-color: white;">Quick Tip</h3>
+            <p style="font-size: var(--text-sm); line-height: 1.6; margin-bottom: var(--space-4);">
+              <strong>Did you know?</strong> You can use CTRL+F to quickly find specific measures in your Power BI
+              model!
+            </p>
+            <button class="btn" style="background: white; color: var(--color-accent); width: 100%;">
+              More Tips
+            </button>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ============================================
+       NEWSLETTER SECTION
+       ============================================ -->
+  <section class="newsletter-section">
+    <div class="container">
+      <h2>Stay Updated with Power BI Insights</h2>
+      <p>Get the latest articles, tutorials, and best practices delivered to your inbox weekly.</p>
+
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" class="newsletter-input" id="newsletter-email" placeholder="Enter your email address"
+          required aria-label="Email address">
+        <button type="submit" class="newsletter-btn">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER_AD_PLACEHOLDER -->
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="footer-content">
+
+        <!-- About Section -->
+        <div class="footer-section">
+          <h4>About EveryTopic</h4>
+          <p style="color: rgba(255, 255, 255, 0.8); font-size: var(--text-sm); line-height: 1.6;">
+            Your premier destination for Power BI insights, tutorials, and industry best practices. Empowering data
+            professionals worldwide.
+          </p>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">All Articles</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Categories -->
+        <div class="footer-section">
+          <h4>Categories</h4>
+          <ul class="footer-links">
+            <li><a href="#">Power BI Basics</a></li>
+            <li><a href="#">Advanced Analytics</a></li>
+            <li><a href="#">Data Modeling</a></li>
+            <li><a href="#">Visualizations</a></li>
+            <li><a href="#">Performance</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources -->
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Best Practices</a></li>
+            <li><a href="#">Templates</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2024 EveryTopic News. All rights reserved. | <a href="#"
+            style="color: rgba(255, 255, 255, 0.8);">Privacy Policy</a> | <a href="#"
+            style="color: rgba(255, 255, 255, 0.8);">Terms of Service</a></p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script src="articles.js"></script>
+  <script src="main.js"></script>
+
+</body>
+
+</html>

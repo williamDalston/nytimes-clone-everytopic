@@ -163,31 +163,47 @@ function formatDate(dateString) {
 }
 
 function renderArticleCard(article, isFeatured = false) {
+    // Create a slug from title for URL
+    const slug = article.slug || article.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    const articleUrl = `articles/${slug}.html`;
+    
     return `
-    <article class="article-card ${isFeatured ? 'featured' : ''}">
-      <div class="article-image-wrapper">
-        <img src="${article.image}" alt="${article.title}" class="article-image">
-        <span class="article-category-badge">${article.category}</span>
-      </div>
-      <div class="article-content">
-        <h3 class="article-title">${article.title}</h3>
-        <p class="article-excerpt">${article.excerpt}</p>
-        <div class="article-meta">
-          <span class="article-author">${article.author}</span>
-          <span class="article-date">
-            ${formatDate(article.date)} · ${article.readTime}
-          </span>
+    <article class="article-card ${isFeatured ? 'featured' : ''}" data-article-id="${article.id}">
+      <a href="${articleUrl}" class="article-card-link" aria-label="Read article: ${article.title}">
+        <div class="article-image-wrapper">
+          <img src="${article.image}" alt="${article.title}" class="article-image" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+          <span class="article-category-badge">${article.category}</span>
         </div>
-      </div>
+        <div class="article-content">
+          <h3 class="article-title">${article.title}</h3>
+          <p class="article-excerpt">${article.excerpt}</p>
+          <div class="article-meta">
+            <span class="article-author">${article.author}</span>
+            <span class="article-date">
+              ${formatDate(article.date)} · ${article.readTime}
+            </span>
+          </div>
+        </div>
+      </a>
     </article>
   `;
 }
 
 function renderTrendingItem(article, index) {
+    const fullArticle = articles.find(a => a.title === article.title || a.title.includes(article.title.split(':')[0]));
+    const slug = fullArticle ? (fullArticle.slug || fullArticle.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')) : '#';
+    const articleUrl = fullArticle ? `articles/${slug}.html` : article.link || '#';
+    
     return `
     <li class="trending-item">
-      <span class="trending-number">${index + 1}</span>
-      <span class="trending-title">${article.title}</span>
+      <a href="${articleUrl}" class="trending-item-link" aria-label="Read trending article: ${article.title}">
+        <span class="trending-number">${index + 1}</span>
+        <span class="trending-title">${article.title}</span>
+      </a>
     </li>
   `;
 }
@@ -199,6 +215,12 @@ function renderTrendingItem(article, index) {
 function renderHeroArticle() {
     const heroArticle = articles.find(article => article.featured);
     if (!heroArticle) return '';
+
+    // Create a slug from title for URL
+    const slug = heroArticle.slug || heroArticle.title.toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    const articleUrl = `articles/${slug}.html`;
 
     return `
     <div class="hero-content">
@@ -213,21 +235,50 @@ function renderHeroArticle() {
           <span>•</span>
           <span>${heroArticle.readTime}</span>
         </div>
-        <button class="btn btn-primary">Read Full Article</button>
+        <a href="${articleUrl}" class="btn btn-primary">Read Full Article</a>
       </div>
       <div class="hero-image-wrapper">
-        <img src="${heroArticle.image}" alt="${heroArticle.title}" class="hero-image">
+        <a href="${articleUrl}" aria-label="Read article: ${heroArticle.title}">
+          <img src="${heroArticle.image}" alt="${heroArticle.title}" class="hero-image" loading="eager" onload="this.classList.add('loaded')" onerror="this.style.display='none'">
+        </a>
       </div>
     </div>
   `;
+}
+
+function renderSkeletonLoader() {
+    return `
+        <div class="skeleton-article-card">
+            <div class="skeleton skeleton-image"></div>
+            <div class="skeleton-content">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text short"></div>
+                <div class="skeleton skeleton-meta"></div>
+            </div>
+        </div>
+    `.repeat(4);
 }
 
 function renderArticles() {
     const articlesGrid = document.getElementById('articles-grid');
     if (!articlesGrid) return;
 
-    const regularArticles = articles.filter(article => !article.featured);
-    articlesGrid.innerHTML = regularArticles.map(article => renderArticleCard(article)).join('');
+    // Show skeleton loaders while loading
+    articlesGrid.innerHTML = renderSkeletonLoader();
+
+    // Simulate loading delay (remove in production)
+    setTimeout(() => {
+        const regularArticles = articles.filter(article => !article.featured);
+        articlesGrid.innerHTML = regularArticles.map(article => renderArticleCard(article)).join('');
+        
+        // Re-initialize scroll animations for new articles
+        if (typeof initScrollAnimations === 'function') {
+            setTimeout(() => {
+                initScrollAnimations();
+            }, 100);
+        }
+    }, 800);
 }
 
 function renderTrending() {

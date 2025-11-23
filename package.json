@@ -8,7 +8,12 @@
     "deploy": "node generator/deploy.js",
     "generate": "node generator/content.js",
     "bulk": "node generator/bulk.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "report": "node generator/report.js",
+    "check": "node generator/check.js",
+    "check:report": "node generator/check.js --report",
+    "test": "node tests/quality.test.js && node tests/seo.test.js",
+    "test:quality": "node tests/quality.test.js",
+    "test:seo": "node tests/seo.test.js"
   },
   "keywords": [
     "static-site-generator",
@@ -16,5 +21,10 @@
     "seo"
   ],
   "author": "EveryTopic",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.20.0",
+    "dotenv": "^16.3.1",
+    "@google/generative-ai": "^0.2.0"
+  }
 }

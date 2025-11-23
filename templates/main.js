@@ -48,7 +48,18 @@ function initDarkMode() {
 
 function updateThemeIcon(theme) {
     const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+    if (!themeToggle) return;
+    
+    const moonIcon = themeToggle.querySelector('.icon-moon');
+    const sunIcon = themeToggle.querySelector('.icon-sun');
+    
+    if (theme === 'light') {
+        if (moonIcon) moonIcon.style.display = 'block';
+        if (sunIcon) sunIcon.style.display = 'none';
+    } else {
+        if (moonIcon) moonIcon.style.display = 'none';
+        if (sunIcon) sunIcon.style.display = 'block';
+    }
 }
 
 // ============================================
@@ -60,15 +71,30 @@ function initMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
 
     mobileMenuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        mobileMenuToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+        const isActive = navMenu.classList.toggle('active');
+        const menuIcon = mobileMenuToggle.querySelector('.icon-menu');
+        const closeIcon = mobileMenuToggle.querySelector('.icon-close');
+        
+        if (isActive) {
+            if (menuIcon) menuIcon.style.display = 'none';
+            if (closeIcon) closeIcon.style.display = 'block';
+            mobileMenuToggle.setAttribute('aria-expanded', 'true');
+        } else {
+            if (menuIcon) menuIcon.style.display = 'block';
+            if (closeIcon) closeIcon.style.display = 'none';
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        }
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.header-container')) {
             navMenu.classList.remove('active');
-            mobileMenuToggle.textContent = '☰';
+            const menuIcon = mobileMenuToggle.querySelector('.icon-menu');
+            const closeIcon = mobileMenuToggle.querySelector('.icon-close');
+            if (menuIcon) menuIcon.style.display = 'block';
+            if (closeIcon) closeIcon.style.display = 'none';
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
         }
     });
 }
@@ -95,7 +121,13 @@ function createSearchOverlay() {
     <div class="search-container">
       <div class="search-header">
         <input type="text" class="search-input" placeholder="Search articles..." id="search-input">
-        <button class="search-close" id="search-close">✕</button>
+        <button class="search-close" id="search-close" aria-label="Close search">
+          <svg class="icon icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span class="sr-only">Close search</span>
+        </button>
       </div>
       <div class="search-results" id="search-results"></div>
     </div>
@@ -168,6 +200,71 @@ function createSearchOverlay() {
       overflow-y: auto;
     }
     
+    .search-result-item {
+      display: block;
+      padding: var(--space-4);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      text-decoration: none;
+      color: inherit;
+      transition: background-color var(--transition-fast), transform var(--transition-fast);
+      border-radius: var(--border-radius);
+      margin-bottom: var(--space-2);
+    }
+    
+    .search-result-item:hover,
+    .search-result-item.selected {
+      background-color: var(--color-surface);
+      transform: translateX(4px);
+    }
+    
+    .search-result-category {
+      font-size: var(--text-xs);
+      color: var(--color-accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: var(--space-1);
+    }
+    
+    .search-result-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-primary);
+      margin: var(--space-2) 0;
+      line-height: 1.4;
+    }
+    
+    .search-result-excerpt {
+      font-size: var(--text-sm);
+      color: var(--color-text-light);
+      margin-bottom: var(--space-2);
+      line-height: 1.5;
+    }
+    
+    .search-result-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-light);
+    }
+    
+    .search-result-item mark {
+      background-color: rgba(187, 25, 25, 0.2);
+      color: var(--color-accent);
+      font-weight: 700;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    
+    .search-no-results,
+    .search-hint {
+      text-align: center;
+      padding: var(--space-8);
+      color: var(--color-text-light);
+    }
+    
+    .search-hint {
+      font-size: var(--text-sm);
+      font-style: italic;
+    }
+    
     .nav-menu.active {
       display: flex;
       position: absolute;
@@ -188,21 +285,60 @@ function createSearchOverlay() {
         setTimeout(() => overlay.remove(), 300);
     });
 
-    // Search input functionality
-    overlay.querySelector('#search-input').addEventListener('input', (e) => {
-        const query = e.target.value;
-        if (query.length > 2) {
-            performSearch(query, overlay.querySelector('#search-results'));
-        } else {
-            overlay.querySelector('#search-results').innerHTML = '';
-        }
+    const searchInput = overlay.querySelector('#search-input');
+    const resultsContainer = overlay.querySelector('#search-results');
+    let selectedIndex = -1;
+    let searchResults = [];
+
+    // Search input functionality with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+        
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            if (query.length > 1) {
+                performSearch(query, resultsContainer);
+                const resultItems = resultsContainer.querySelectorAll('.search-result-item');
+                searchResults = Array.from(resultItems);
+                selectedIndex = -1;
+            } else if (query.length === 0) {
+                resultsContainer.innerHTML = '<div class="search-hint">Start typing to search articles...</div>';
+            }
+        }, 200);
     });
 
-    // Close on escape key
+    // Keyboard navigation
     overlay.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             overlay.classList.remove('active');
             setTimeout(() => overlay.remove(), 300);
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            selectedIndex = Math.min(selectedIndex + 1, searchResults.length - 1);
+            updateSelectedItem(searchResults, selectedIndex);
+            if (searchResults[selectedIndex]) {
+                searchResults[selectedIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            selectedIndex = Math.max(selectedIndex - 1, -1);
+            updateSelectedItem(searchResults, selectedIndex);
+        } else if (e.key === 'Enter' && selectedIndex >= 0 && searchResults[selectedIndex]) {
+            e.preventDefault();
+            searchResults[selectedIndex].click();
+        }
+    });
+
+    // Keyboard shortcut to open search (Ctrl+K or Cmd+K)
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            if (!document.querySelector('.search-overlay.active')) {
+                document.body.appendChild(overlay);
+                overlay.classList.add('active');
+                searchInput.focus();
+            }
         }
     });
 
@@ -219,17 +355,56 @@ function performSearch(query, resultsContainer) {
     );
 
     if (results.length === 0) {
-        resultsContainer.innerHTML = '<p style="text-align: center; padding: 2rem; color: var(--color-text-light);">No articles found.</p>';
+        resultsContainer.innerHTML = `
+            <div class="search-no-results">
+                <p>No articles found matching "${query}"</p>
+                <p style="font-size: var(--text-sm); margin-top: var(--space-2);">Try different keywords or browse our categories.</p>
+            </div>
+        `;
     } else {
-        resultsContainer.innerHTML = results.map(article => `
-      <div class="search-result-item" style="padding: var(--space-4); border-bottom: 1px solid rgba(0,0,0,0.1); cursor: pointer;">
-        <span style="font-size: var(--text-xs); color: var(--color-accent); font-weight: 700; text-transform: uppercase;">${article.category}</span>
-        <h4 style="margin: var(--space-2) 0; color: var(--color-primary);">${article.title}</h4>
-        <p style="font-size: var(--text-sm); color: var(--color-text-light); margin-bottom: var(--space-2);">${article.excerpt.substring(0, 120)}...</p>
-        <span style="font-size: var(--text-xs); color: var(--color-text-light);">${article.author} · ${formatDate(article.date)}</span>
-      </div>
-    `).join('');
+        const slug = (article) => article.slug || article.title.toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        
+        resultsContainer.innerHTML = results.map((article, index) => {
+            const articleUrl = `articles/${slug(article)}.html`;
+            return `
+                <a href="${articleUrl}" class="search-result-item" data-index="${index}" role="option" aria-label="Article: ${article.title}">
+                    <div class="search-result-category">${article.category}</div>
+                    <h4 class="search-result-title">${highlightMatch(article.title, searchQuery)}</h4>
+                    <p class="search-result-excerpt">${highlightMatch(article.excerpt.substring(0, 120), searchQuery)}...</p>
+                    <div class="search-result-meta">${article.author} · ${formatDate(article.date)}</div>
+                </a>
+            `;
+        }).join('');
+        
+        // Add keyboard navigation
+        const resultItems = resultsContainer.querySelectorAll('.search-result-item');
+        let selectedIndex = -1;
+        
+        resultItems.forEach((item, index) => {
+            item.addEventListener('mouseenter', () => {
+                selectedIndex = index;
+                updateSelectedItem(resultItems, selectedIndex);
+            });
+            
+            item.addEventListener('click', (e) => {
+                // Navigation will happen naturally via href
+            });
+        });
     }
+}
+
+function highlightMatch(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+function updateSelectedItem(items, index) {
+    items.forEach((item, i) => {
+        item.classList.toggle('selected', i === index);
+    });
 }
 
 // ============================================
@@ -238,15 +413,64 @@ function performSearch(query, resultsContainer) {
 
 function initNewsletter() {
     const newsletterForm = document.getElementById('newsletter-form');
+    if (!newsletterForm) return;
 
     newsletterForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('newsletter-email').value;
-
+        const emailInput = document.getElementById('newsletter-email');
+        const email = emailInput.value.trim();
+        const submitButton = newsletterForm.querySelector('button[type="submit"]');
+        
+        // Basic email validation
+        if (!email || !email.includes('@')) {
+            showNewsletterMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Subscribing...';
+        submitButton.disabled = true;
+        
         // Simulate form submission
-        alert(`Thank you for subscribing! We'll send Power BI insights to ${email}`);
-        newsletterForm.reset();
+        setTimeout(() => {
+            showNewsletterMessage(`Thank you for subscribing! We'll send Power BI insights to ${email}`, 'success');
+            newsletterForm.reset();
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }, 1000);
     });
+}
+
+function showNewsletterMessage(message, type = 'success') {
+    const newsletterSection = document.querySelector('.newsletter-section');
+    if (!newsletterSection) return;
+    
+    // Remove existing message
+    const existingMessage = newsletterSection.querySelector('.newsletter-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create new message
+    const messageEl = document.createElement('div');
+    messageEl.className = `newsletter-message newsletter-message-${type}`;
+    messageEl.textContent = message;
+    messageEl.setAttribute('role', 'alert');
+    
+    const form = newsletterSection.querySelector('.newsletter-form');
+    if (form) {
+        form.parentNode.insertBefore(messageEl, form);
+    } else {
+        newsletterSection.appendChild(messageEl);
+    }
+    
+    // Remove message after 5 seconds
+    setTimeout(() => {
+        messageEl.style.opacity = '0';
+        messageEl.style.transform = 'translateY(-10px)';
+        setTimeout(() => messageEl.remove(), 300);
+    }, 5000);
 }
 
 // ============================================
@@ -305,6 +529,93 @@ function initCategoryFilters() {
 }
 
 // ============================================
+// SCROLL PROGRESS INDICATOR
+// ============================================
+
+function initScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', () => {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
+
+// ============================================
+// SMOOTH SCROLL TO TOP
+// ============================================
+
+function initScrollToTop() {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.innerHTML = `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+    `;
+    scrollBtn.setAttribute('aria-label', 'Scroll to top');
+    scrollBtn.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 48px;
+        height: 48px;
+        background: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow-lg);
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity var(--transition-base), transform var(--transition-base), background-color var(--transition-fast);
+    `;
+    
+    document.body.appendChild(scrollBtn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            scrollBtn.style.display = 'flex';
+            setTimeout(() => {
+                scrollBtn.style.opacity = '1';
+                scrollBtn.style.transform = 'translateY(0)';
+            }, 10);
+        } else {
+            scrollBtn.style.opacity = '0';
+            scrollBtn.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                scrollBtn.style.display = 'none';
+            }, 300);
+        }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    scrollBtn.addEventListener('mouseenter', () => {
+        scrollBtn.style.backgroundColor = 'var(--color-accent-hover)';
+        scrollBtn.style.transform = 'translateY(-4px)';
+    });
+
+    scrollBtn.addEventListener('mouseleave', () => {
+        scrollBtn.style.backgroundColor = 'var(--color-accent)';
+        scrollBtn.style.transform = 'translateY(0)';
+    });
+}
+
+// ============================================
 // INITIALIZE ALL FEATURES
 // ============================================
 
@@ -314,6 +625,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initSearch();
     initNewsletter();
+    initScrollProgress();
+    initScrollToTop();
 
     // Delay scroll animations slightly to ensure articles are rendered
     setTimeout(() => {

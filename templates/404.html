@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | EveryTopic News</title>
+    <meta name="description" content="The page you're looking for doesn't exist.">
+    <meta name="robots" content="noindex, follow">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .error-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-10) var(--space-4);
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--color-accent);
+            margin-bottom: var(--space-4);
+            font-family: var(--font-display);
+        }
+
+        .error-title {
+            font-size: var(--text-4xl);
+            margin-bottom: var(--space-4);
+            color: var(--color-primary);
+        }
+
+        .error-message {
+            font-size: var(--text-lg);
+            color: var(--color-text-light);
+            margin-bottom: var(--space-8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-illustration {
+            margin-bottom: var(--space-8);
+            opacity: 0.1;
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: var(--text-3xl);
+            }
+
+            .error-message {
+                font-size: var(--text-base);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">
+                    Every<span class="logo-accent">Topic</span>
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="index.html" class="btn btn-outline">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Error Page -->
+    <main class="error-page">
+        <div class="container">
+            <div class="error-illustration">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" stroke="currentColor" stroke-width="4" />
+                    <path d="M70 70L130 130M130 70L70 130" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+                </svg>
+            </div>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">
+                Oops! The page you're looking for doesn't exist. It may have been moved, deleted, or the URL might be
+                incorrect.
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary">Go to Homepage</a>
+                <button onclick="window.history.back()" class="btn btn-outline">Go Back</button>
+            </div>
+
+            <!-- Popular Articles -->
+            <div style="margin-top: var(--space-12); max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 style="font-size: var(--text-2xl); margin-bottom: var(--space-6);">Popular Articles</h3>
+                <div class="articles-grid" id="popular-articles" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <!-- Popular articles will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 EveryTopic News. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="articles.js"></script>
+    <script>
+        // Load popular articles
+        document.addEventListener('DOMContentLoaded', () => {
+            const popularGrid = document.getElementById('popular-articles');
+            if (popularGrid && typeof articles !== 'undefined') {
+                const popularArticles = articles.slice(0, 3);
+                popularGrid.innerHTML = popularArticles.map(article => {
+                    const slug = article.title.toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-+|-+$/g, '');
+                    return `
+                        <article class="article-card">
+                            <a href="articles/${slug}.html" class="article-card-link">
+                                <div class="article-image-wrapper">
+                                    <img src="${article.image}" alt="${article.title}" class="article-image" loading="lazy">
+                                    <span class="article-category-badge">${article.category}</span>
+                                </div>
+                                <div class="article-content">
+                                    <h3 class="article-title">${article.title}</h3>
+                                    <p class="article-excerpt">${article.excerpt.substring(0, 100)}...</p>
+                                </div>
+                            </a>
+                        </article>
+                    `;
+                }).join('');
+            }
+        });
+    </script>
+</body>
+
+</html>
+

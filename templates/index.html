@@ -13,15 +13,79 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="EveryTopic News - Power BI Insights & Analytics">
   <meta property="og:description" content="Your premier source for Power BI insights, tutorials, and best practices.">
+  <meta property="og:url" content="https://everytopic.news">
+  <meta property="og:image" content="https://everytopic.news/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="EveryTopic News">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EveryTopic News - Power BI Insights & Analytics">
+  <meta name="twitter:description" content="Your premier source for Power BI insights, tutorials, and best practices.">
+  <meta name="twitter:image" content="https://everytopic.news/images/twitter-card.jpg">
+
+  <!-- Structured Data - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "EveryTopic News",
+    "url": "https://everytopic.news",
+    "logo": "https://everytopic.news/images/logo.png",
+    "description": "Your premier source for Power BI insights, tutorials, and best practices.",
+    "sameAs": [
+      "https://twitter.com/everytopic",
+      "https://linkedin.com/company/everytopic",
+      "https://youtube.com/@everytopic"
+    ]
+  }
+  </script>
+
+  <!-- Structured Data - Website -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "EveryTopic News",
+    "url": "https://everytopic.news",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://everytopic.news/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data - NewsArticle Collection -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": []
+  }
+  </script>
 
   <!-- SEO_TAGS_PLACEHOLDER -->
+  
+  <!-- Analytics Script (if enabled) -->
+  <!-- ANALYTICS_SCRIPT -->
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -29,10 +93,13 @@
 
 <body>
 
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <!-- ============================================
        HEADER & NAVIGATION
        ============================================ -->
-  <header class="header" id="header">
+  <header class="header" id="header" role="banner">
     <div class="container">
       <div class="header-container">
         <!-- Logo -->
@@ -41,7 +108,7 @@
         </a>
 
         <!-- Navigation Menu -->
-        <nav>
+        <nav role="navigation" aria-label="Main navigation">
           <ul class="nav-menu">
             <li><a href="#" class="nav-link active">All Topics</a></li>
             <li><a href="#" class="nav-link">Latest Updates</a></li>
@@ -54,13 +121,40 @@
         <!-- Header Actions -->
         <div class="header-actions">
           <button class="search-btn" id="search-btn" aria-label="Search">
-            🔍
+            <svg class="icon icon-search" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <span class="sr-only">Search</span>
           </button>
           <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-            🌙
+            <svg class="icon icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="icon icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" x2="19.78"></line>
+            </svg>
+            <span class="sr-only">Toggle dark mode</span>
           </button>
-          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-            ☰
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <svg class="icon icon-menu" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <svg class="icon icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span class="sr-only">Toggle menu</span>
           </button>
         </div>
       </div>
@@ -81,8 +175,16 @@
   <!-- ============================================
        MAIN CONTENT AREA
        ============================================ -->
-  <main class="articles-section">
+  <main class="articles-section" id="main-content" role="main">
     <div class="container">
+
+      <!-- Breadcrumbs -->
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item" aria-current="page">Latest Articles</li>
+        </ol>
+      </nav>
 
       <!-- Section Header -->
       <div class="section-header">
@@ -99,7 +201,7 @@
         </div>
 
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" role="complementary" aria-label="Sidebar">
 
           <!-- SIDEBAR_AD_PLACEHOLDER -->
 
@@ -176,7 +278,7 @@
   <!-- ============================================
        FOOTER
        ============================================ -->
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="container">
 
       <div class="footer-content">
@@ -189,9 +291,27 @@
             professionals worldwide.
           </p>
           <div class="social-links">
-            <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
-            <a href="#" class="social-link" aria-label="LinkedIn">in</a>
-            <a href="#" class="social-link" aria-label="YouTube">▶</a>
+            <a href="#" class="social-link" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+              <span class="sr-only">Twitter</span>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              <span class="sr-only">LinkedIn</span>
+            </a>
+            <a href="#" class="social-link" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+              </svg>
+              <span class="sr-only">YouTube</span>
+            </a>
           </div>
         </div>
 

@@ -1,52 +1,366 @@
+require('dotenv').config(); // Load environment variables first
 const config = require('./config');
+const LLMClient = require('./llm');
+const CostTracker = require('./cost-tracker');
+const ArticleQualityScorer = require('./quality');
+const { TopicManager, ARTICLE_STYLES, ARTICLE_ANGLES } = require('./topics');
+const ErrorLogger = require('./error-logger');
+const PipelineValidator = require('./pipeline-validator');
 
-// Simulated LLM Client
-const generateArticle = async (topic) => {
-    console.log(`🤖 Generating article for topic: ${topic}...`);
+// Initialize Error Logger and Validator
+const errorLogger = new ErrorLogger();
+const pipelineValidator = new PipelineValidator({ errorLogger });
 
-    // In a real implementation, this would call OpenAI/Gemini API
-    // For now, we return a structured object
-    return {
-        title: `The Future of ${topic}: What You Need to Know`,
-        excerpt: `An in-depth look at how ${topic} is transforming the industry and what experts are predicting for the coming year.`,
-        content: `
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <h3>Key Takeaways</h3>
-      <ul>
-        <li>Revolutionary changes in ${topic}</li>
-        <li>Expert analysis and predictions</li>
-        <li>Strategic implementation guides</li>
-      </ul>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    `,
-        author: "AI Analyst",
-        date: new Date().toISOString().split('T')[0],
-        readTime: "5 min read",
-        category: "AI Insights"
-    };
+// Initialize Cost Tracker (Phase 3)
+const costTracker = new CostTracker({
+    budget: process.env.MONTHLY_BUDGET ? parseFloat(process.env.MONTHLY_BUDGET) : null,
+    costFile: process.env.COST_FILE || undefined
+});
+
+// Initialize Quality Scorer (Phase 3)
+const qualityScorer = new ArticleQualityScorer();
+
+// Initialize LLM Client with cost tracker
+const llmClient = new LLMClient({
+    apiKey: config.api.llm,
+    model: config.llm.model,
+    cacheDir: config.llm.cacheDir,
+    dryRun: config.llm.dryRun,
+    maxRetries: 3,
+    retryDelay: 1000,
+    costTracker: costTracker // Phase 3: Add cost tracking
+});
+
+// Initialize Topic Manager
+const topicManager = new TopicManager();
+
+// Initialize Template Manager
+const templateManager = new TemplateManager();
+
+// Initialize Quality Scorer
+const qualityScorer = new ArticleQualityScorer();
+
+/**
+ * Generate article using real LLM (with optional multi-stage pipeline)
+ * Now supports TopicManager topics with varying styles and lengths
+ * Priority 1: Real LLM Integration + Topic Switching
+ */
+const generateArticle = async (topicOrConfig, options = {}) => {
+    // Phase 2: Input validation
+    try {
+        // Handle both topic strings and topic config objects
+        let topic, articleConfig;
+        
+        if (typeof topicOrConfig === 'string') {
+            // Legacy: just a topic string
+            topic = sanitizeTopic(topicOrConfig);
+            validateTopic(topic);
+            articleConfig = options.articleConfig || topicManager.generateArticleConfig(
+                topicManager.getTopicBySlug(topic) || { slug: topic, category: 'general' },
+                options
+            );
+        } else {
+            // New: topic config object from TopicManager
+            articleConfig = topicOrConfig;
+            topic = articleConfig.topic?.slug || articleConfig.topic?.title || articleConfig.topic;
+            if (typeof topic === 'string') {
+                topic = sanitizeTopic(topic);
+                validateTopic(topic);
+            }
+        }
+        
+        const topicDisplay = articleConfig.topic?.title || articleConfig.topic?.slug || topic;
+        
+        // Validate topic display
+        if (!topicDisplay || typeof topicDisplay !== 'string' || topicDisplay.trim().length === 0) {
+            throw new Error('Invalid topic: topic display name is required');
+        }
+    const styleName = articleConfig.style?.name || 'medium';
+    const angleName = articleConfig.angle?.name || 'analytical';
+    
+    console.log(`🤖 Generating ${styleName} article (${angleName} angle) for: ${topicDisplay}...`);
+
+    try {
+        // Use style-specific prompt if available
+        const stylePrompt = articleConfig.style?.name || 'medium';
+        const anglePrompt = articleConfig.angle?.name || 'analytical';
+        
+        // Check if multi-stage pipeline is requested
+        const usePipeline = options.usePipeline !== false && !config.llm.dryRun;
+        
+        // Build enhanced prompt with style and angle
+        const enhancedOptions = {
+            ...options,
+            style: stylePrompt,
+            angle: anglePrompt,
+            wordCount: articleConfig.wordCount,
+            sections: articleConfig.sections,
+            category: articleConfig.topic?.category || options.category || getCategoryFromTopic(topic),
+            topicObject: articleConfig.topic
+        };
+        
+        let article;
+        
+        if (usePipeline) {
+            // Phase 2: Multi-Stage Pipeline (3-stage: blueprint → draft → enhance)
+            // Can be extended to 5-stage for Phase 3 (add humanize → seo)
+            const defaultStages = ['blueprint', 'draft', 'enhance'];
+            article = await llmClient.generateArticlePipeline(topicDisplay, {
+                ...enhancedOptions,
+                stages: options.stages || defaultStages,
+                useCache: config.llm.useCache,
+                promptVersion: options.promptVersion || 'v1',
+                articleId: articleConfig.topic?.slug || topic
+            });
+        } else {
+            // Single-stage generation with style-specific prompt
+            article = await llmClient.generateArticle(topicDisplay, {
+                ...enhancedOptions,
+                stage: stylePrompt, // Use style as stage for prompt selection
+                useCache: config.llm.useCache,
+                articleId: articleConfig.topic?.slug || topic
+            });
+        }
+
+        // Phase 3: Quality scoring (optional - not yet implemented)
+        // const qualityReport = qualityScorer?.scoreArticle(article);
+        // if (qualityReport) {
+        //     article.quality = qualityReport;
+        // }
+
+        // Ensure all required fields are present with style-specific defaults
+        const readTime = articleConfig.readTime || article.readTime || `${Math.ceil((articleConfig.wordCount || 800) / 200)} min read`;
+        const category = articleConfig.topic?.category || article.category || getCategoryFromTopic(topicDisplay);
+        
+        // Build article object
+        const finalArticle = {
+            title: article.title || `${topicDisplay}: Understanding the Essentials`,
+            excerpt: article.excerpt || `A ${styleName} exploration of ${topicDisplay} and its significance.`,
+            content: article.content || '<p>Content generation in progress...</p>',
+            author: article.author || "AI Analyst",
+            date: article.date || new Date().toISOString().split('T')[0],
+            readTime: readTime,
+            category: category.charAt(0).toUpperCase() + category.slice(1), // Capitalize category
+            style: styleName,
+            angle: angleName,
+            wordCount: articleConfig.wordCount || 0,
+            topicSlug: articleConfig.topic?.slug || topic,
+            quality: article.quality || null, // Phase 3: Quality score (optional)
+            _tokenUsage: article._tokenUsage || null // Phase 3: Token usage (optional)
+        };
+
+        // Phase 2: Validate final article structure
+        const validation = validateArticleStructure(finalArticle);
+        if (!validation.valid) {
+            const error = new Error(`Article validation failed: ${validation.errors.join(', ')}`);
+            errorLogger.log(error, {
+                module: 'content',
+                operation: 'validate-article',
+                category: 'validation',
+                severity: 'error',
+                metadata: {
+                    topic: topicDisplay,
+                    errors: validation.errors
+                }
+            });
+            console.warn(`⚠️ Article validation failed: ${validation.errors.join(', ')}`);
+        }
+        if (validation.warnings && validation.warnings.length > 0) {
+            validation.warnings.forEach(warning => {
+                errorLogger.log(new Error(warning), {
+                    module: 'content',
+                    operation: 'validate-article',
+                    category: 'validation',
+                    severity: 'warning',
+                    metadata: { topic: topicDisplay }
+                });
+            });
+            console.warn(`⚠️ Article validation warnings: ${validation.warnings.join(', ')}`);
+        }
+
+        // Log quality score if available (Phase 3 feature - optional)
+        if (finalArticle.quality && finalArticle.quality.scores) {
+            console.log(`   ✅ Quality: ${finalArticle.quality.grade} (${finalArticle.quality.scores.overall.toFixed(1)}/100)`);
+        }
+
+        return finalArticle;
+    } catch (validationError) {
+        // Handle validation errors separately
+        if (validationError.message.includes('must be') || validationError.message.includes('Invalid topic')) {
+            console.error(`❌ Validation error: ${validationError.message}`);
+            throw validationError;
+        }
+        // Re-throw other errors to be handled by outer catch
+        throw validationError;
+    } catch (error) {
+        errorLogger.log(error, {
+            module: 'content',
+            operation: 'generate-article',
+            category: 'pipeline',
+            severity: 'error',
+            metadata: {
+                topic: topicDisplay || 'unknown',
+                style: styleName,
+                angle: angleName
+            }
+        });
+        
+        console.error(`❌ Error generating article for ${topicDisplay}:`, error.message);
+        if (error.stack) {
+            console.error(`   Stack: ${error.stack.split('\n').slice(0, 3).join('\n')}`);
+        }
+        
+        // Phase 2: Enhanced error handling with retry attempt
+        // Try to use cached version if available
+        if (config.llm.useCache) {
+            try {
+                const cachedArticle = llmClient.getCachedArticle(topicDisplay, options.promptVersion || 'v1');
+                if (cachedArticle) {
+                    console.log(`   🔄 Using cached version as fallback`);
+                    return {
+                        ...cachedArticle,
+                        style: styleName,
+                        angle: angleName,
+                        wordCount: articleConfig.wordCount || 0,
+                        topicSlug: articleConfig.topic?.slug || topicDisplay
+                    };
+                }
+            } catch (cacheError) {
+                console.warn(`   ⚠️ Cache fallback failed: ${cacheError.message}`);
+            }
+        }
+        
+        // Final fallback to basic structure if generation fails
+        const fallbackCategory = articleConfig.topic?.category || options.category || getCategoryFromTopic(topicDisplay);
+        
+        return {
+            title: `${topicDisplay}: Understanding the Essentials`,
+            excerpt: `An exploration of ${topicDisplay} and its significance.`,
+            content: `<p>We encountered an error generating this article. Please try again later.</p><p>Error: ${error.message}</p>`,
+            author: "AI Analyst",
+            date: new Date().toISOString().split('T')[0],
+            readTime: articleConfig.readTime || "5 min read",
+            category: fallbackCategory.charAt(0).toUpperCase() + fallbackCategory.slice(1),
+            style: styleName,
+            angle: angleName,
+            wordCount: articleConfig.wordCount || 0,
+            topicSlug: articleConfig.topic?.slug || topicDisplay
+        };
+    }
 };
 
-// Simulated "Nano Banana" Image Generator
-const generateImage = async (prompt) => {
-    console.log(`🍌 Nano Banana generating image for: ${prompt}...`);
-
-    // In a real implementation, this would call the image gen API
-    // For now, return a high-quality Unsplash placeholder based on keywords
-    const keywords = prompt.split(' ').slice(0, 2).join(',');
-    return `https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=1200&h=800&fit=crop&q=80&keywords=${keywords}`;
+/**
+ * Helper: Infer category from topic
+ */
+const getCategoryFromTopic = (topic) => {
+    const topicLower = topic.toLowerCase();
+    if (topicLower.includes('beginner') || topicLower.includes('for beginners')) {
+        return config.content.topic + ' Basics';
+    }
+    if (topicLower.includes('advanced') || topicLower.includes('techniques')) {
+        return 'Advanced Analytics';
+    }
+    if (topicLower.includes('trend') || topicLower.includes('2025')) {
+        return 'Latest Updates';
+    }
+    if (topicLower.includes('visualization') || topicLower.includes('dashboard')) {
+        return 'Visualizations';
+    }
+    return 'AI Insights';
 };
 
-// Topic Expander
-const expandTopics = async (seedTopic) => {
+const ImageGenerator = require('./image-gen');
+const ArticleQualityScorer = require('./quality');
+const { TemplateManager } = require('./templates');
+
+// Initialize Image Generator (Nano Banana)
+const imageGenerator = new ImageGenerator({
+    apiKey: config.api.imageGen,
+    dryRun: config.llm.dryRun,
+    size: { width: 1200, height: 800 } // Exact size for articles
+});
+
+/**
+ * Generate image using Gemini's image generation (Nano Banana)
+ * Exact size: 1200x800 for article headers
+ * Phase 3: Tracks image generation costs
+ */
+const generateImage = async (prompt, options = {}) => {
+    try {
+        // Generate smart image prompt from article topic
+        const imagePrompt = imageGenerator.generateImagePrompt(prompt, {
+            style: options.style || 'editorial photography',
+            mood: options.mood || 'professional'
+        });
+
+        // Generate image with exact dimensions
+        const imageUrl = await imageGenerator.generateImage(imagePrompt, {
+            width: options.width || 1200,
+            height: options.height || 800,
+            saveLocal: options.saveLocal !== false // Default: save locally
+        });
+
+        // Phase 3: Track image generation cost
+        if (costTracker && !config.llm.dryRun) {
+            costTracker.trackImageCost(1, options.articleId || null);
+        }
+
+        return imageUrl;
+    } catch (error) {
+        console.error(`❌ Image generation failed for "${prompt}":`, error.message);
+        
+        // Fallback to high-quality Unsplash placeholder with exact size
+        const keywords = prompt.split(' ').slice(0, 2).join(',');
+        const width = options.width || 1200;
+        const height = options.height || 800;
+        return `https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=${width}&h=${height}&fit=crop&q=80&auto=format&fm=jpg&keywords=${keywords}`;
+    }
+};
+
+/**
+ * Topic Expander - Generate related article topics
+ * Can optionally use LLM for smarter topic expansion
+ */
+const expandTopics = async (seedTopic, options = {}) => {
     console.log(`🧠 Expanding topic: ${seedTopic}...`);
-    return [
+    
+    // Simple pattern-based expansion (fast, no API cost)
+    const patterns = [
         `${seedTopic} Trends 2025`,
         `Best ${seedTopic} Tools`,
         `How to Master ${seedTopic}`,
         `${seedTopic} for Beginners`,
         `Advanced ${seedTopic} Techniques`
     ];
+    
+    // If LLM expansion is requested and not in dry-run mode
+    if (options.useLLM && !config.llm.dryRun) {
+        try {
+            const prompt = `Generate 5 engaging article topics related to "${seedTopic}". 
+Topics should be:
+- SEO-friendly
+- Specific and actionable
+- Varied in difficulty (beginner to advanced)
+- Include different angles (tutorials, trends, tools, techniques)
+
+Output as JSON array: ["topic1", "topic2", "topic3", "topic4", "topic5"]`;
+            
+            const response = await llmClient._callAPI(prompt, { topic: seedTopic });
+            const jsonMatch = response.match(/\[[\s\S]*\]/);
+            
+            if (jsonMatch) {
+                const topics = JSON.parse(jsonMatch[0]);
+                if (Array.isArray(topics) && topics.length > 0) {
+                    console.log(`✨ Generated ${topics.length} topics using LLM`);
+                    return topics;
+                }
+            }
+        } catch (error) {
+            console.warn(`⚠️ LLM topic expansion failed, using patterns:`, error.message);
+        }
+    }
+    
+    return patterns;
 };
 
 module.exports = {

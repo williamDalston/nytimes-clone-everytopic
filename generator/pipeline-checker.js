@@ -85,6 +85,15 @@ class PipelineChecker {
             const isDryRun = config.llm.dryRun || process.env.DRY_RUN === 'true';
             
             // Check if API keys are actually set in environment (even if config has placeholders)
+            // Load dotenv to ensure environment variables are available
+            if (!process.env.OPENAI_API_KEY && !process.env.LLM_API_KEY) {
+                try {
+                    require('dotenv').config();
+                } catch (e) {
+                    // dotenv might not be available, that's ok
+                }
+            }
+            
             const hasOpenAIKey = !!(process.env.OPENAI_API_KEY || process.env.LLM_API_KEY);
             const hasGeminiKey = !!(process.env.GEMINI_API_KEY || process.env.IMAGE_GEN_API_KEY);
             
@@ -99,12 +108,14 @@ class PipelineChecker {
                 } else if (value === 'placeholder-llm-key' || value === 'placeholder-nano-banana-key') {
                     // Only mark as placeholder if not overridden by environment
                     if (field === 'api.llm' && hasOpenAIKey) {
-                        // Environment has the key, so it's fine
+                        // Environment has the key, so it's fine - skip this placeholder
+                        return;
                     } else if (field === 'api.imageGen' && hasGeminiKey) {
-                        // Environment has the key, so it's fine
-                    } else {
-                        placeholders.push(field);
+                        // Environment has the key, so it's fine - skip this placeholder
+                        return;
                     }
+                    // No environment override, so it's a real placeholder
+                    placeholders.push(field);
                 }
             });
             

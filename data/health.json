@@ -1,0 +1,36 @@
+{
+  "lastCheck": "2025-11-23T06:16:02.943Z",
+  "checks": [
+    {
+      "timestamp": "2025-11-23T06:16:02.943Z",
+      "status": "healthy",
+      "passed": 13,
+      "failed": 0,
+      "warnings": 0,
+      "hasWarnings": false
+    }
+  ],
+  "uptime": {
+    "startTime": 1763878562861,
+    "totalOperations": 0,
+    "successfulOperations": 0,
+    "failedOperations": 0
+  },
+  "performance": {
+    "avgBuildTime": null,
+    "avgGenerationTime": null,
+    "lastBuildTime": null,
+    "lastGenerationTime": null
+  },
+  "api": {
+    "totalCalls": 0,
+    "successfulCalls": 0,
+    "failedCalls": 0,
+    "rateLimitHits": 0
+  },
+  "cache": {
+    "hits": 0,
+    "misses": 0,
+    "hitRate": 0
+  }
+}

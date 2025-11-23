@@ -119,16 +119,76 @@
         "metadata": {}
       },
       "metadata": {}
+    },
+    {
+      "id": "1763878541130-quhzp2asf",
+      "timestamp": "2025-11-23T06:15:41.130Z",
+      "message": "Placeholder API keys (not allowed in production): api.llm",
+      "stack": "Error: Placeholder API keys (not allowed in production): api.llm\n    at PipelineChecker.fail (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:510:23)\n    at PipelineChecker.checkConfiguration (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:141:26)\n    at PipelineChecker.runPreFlightChecks (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:35:20)\n    at main (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/check.js:32:43)\n    at Object.<anonymous> (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/check.js:70:5)\n    at Module._compile (node:internal/modules/cjs/loader:1692:14)\n    at Object..js (node:internal/modules/cjs/loader:1824:10)\n    at Module.load (node:internal/modules/cjs/loader:1427:32)\n    at Module._load (node:internal/modules/cjs/loader:1250:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)",
+      "category": "pipeline",
+      "severity": "error",
+      "context": {
+        "module": "pipeline-checker",
+        "operation": "check-configuration",
+        "category": "pipeline",
+        "severity": "error",
+        "metadata": {
+          "module": "pipeline-checker",
+          "operation": "check-configuration",
+          "placeholders": [
+            "api.llm"
+          ]
+        }
+      },
+      "metadata": {
+        "module": "pipeline-checker",
+        "operation": "check-configuration",
+        "placeholders": [
+          "api.llm"
+        ]
+      }
+    },
+    {
+      "id": "1763878541131-iiwj85dyh",
+      "timestamp": "2025-11-23T06:15:41.131Z",
+      "message": "LLM API key not set, will use dry-run mode",
+      "stack": "Error: LLM API key not set, will use dry-run mode\n    at PipelineChecker.warn (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:528:23)\n    at PipelineChecker.checkEnvironment (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:237:22)\n    at PipelineChecker.runPreFlightChecks (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:38:20)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async main (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/check.js:32:21)",
+      "category": "pipeline",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-checker",
+        "operation": "check",
+        "category": "pipeline",
+        "severity": "warning",
+        "metadata": {}
+      },
+      "metadata": {}
+    },
+    {
+      "id": "1763878541131-s2oqy2tl6",
+      "timestamp": "2025-11-23T06:15:41.131Z",
+      "message": "Image generation API key not set, will use fallback images",
+      "stack": "Error: Image generation API key not set, will use fallback images\n    at PipelineChecker.warn (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:528:23)\n    at PipelineChecker.checkEnvironment (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:243:22)\n    at PipelineChecker.runPreFlightChecks (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/pipeline-checker.js:38:20)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async main (/Users/williamalston/Desktop/nytimes-clone-everytopic/generator/check.js:32:21)",
+      "category": "pipeline",
+      "severity": "warning",
+      "context": {
+        "module": "pipeline-checker",
+        "operation": "check",
+        "category": "pipeline",
+        "severity": "warning",
+        "metadata": {}
+      },
+      "metadata": {}
     }
   ],
   "summary": {
-    "total": 6,
+    "total": 9,
     "byCategory": {
-      "pipeline": 6
+      "pipeline": 9
     },
     "bySeverity": {
-      "error": 2,
-      "warning": 4
+      "error": 3,
+      "warning": 6
     },
     "recent": [
       {
@@ -172,8 +232,29 @@
         "category": "pipeline",
         "severity": "warning",
         "timestamp": "2025-11-23T06:15:06.945Z"
+      },
+      {
+        "id": "1763878541130-quhzp2asf",
+        "message": "Placeholder API keys (not allowed in production): api.llm",
+        "category": "pipeline",
+        "severity": "error",
+        "timestamp": "2025-11-23T06:15:41.130Z"
+      },
+      {
+        "id": "1763878541131-iiwj85dyh",
+        "message": "LLM API key not set, will use dry-run mode",
+        "category": "pipeline",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:15:41.131Z"
+      },
+      {
+        "id": "1763878541131-s2oqy2tl6",
+        "message": "Image generation API key not set, will use fallback images",
+        "category": "pipeline",
+        "severity": "warning",
+        "timestamp": "2025-11-23T06:15:41.131Z"
       }
     ]
   },
-  "timestamp": "2025-11-23T06:15:06.945Z"
+  "timestamp": "2025-11-23T06:15:41.131Z"
 }

@@ -10,6 +10,8 @@
     "bulk": "node generator/bulk.js",
     "report": "node generator/report.js",
     "check": "node generator/check.js",
+    "health": "node generator/health-report.js",
+    "health:export": "node generator/health-report.js --export",
     "check:report": "node generator/check.js --report",
     "test": "node tests/quality.test.js && node tests/seo.test.js",
     "test:quality": "node tests/quality.test.js",

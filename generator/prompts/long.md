@@ -6,6 +6,11 @@ Write a comprehensive, in-depth article about: {topic}
 - Detailed analysis
 - Extensive examples
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Explore deeply from your unique lens/angle while maintaining comprehensiveness.{/if}
+
 **Angle: {angle}**
 {tone}
 

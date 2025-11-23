@@ -245,21 +245,39 @@ class LLMClient {
 
         let prompt = fs.readFileSync(promptFile, 'utf8');
         
-        // Phase 2: Enhanced variable substitution
+        // Phase 2: Enhanced variable substitution with conditional blocks
+        // First, handle conditional blocks {if variable}...{/if}
+        prompt = prompt.replace(/\{if\s+(\w+)\}([\s\S]*?)\{\/if\}/g, (match, varName, content) => {
+            const value = variables[varName];
+            if (value && value !== '' && value !== undefined && value !== null) {
+                return content;
+            }
+            return '';
+        });
+        
         // Replace variables with proper escaping
         Object.keys(variables).forEach(key => {
             const value = variables[key] || '';
-            // Escape special regex characters in the value
-            const escapedValue = String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            // Replace all occurrences
-            const regex = new RegExp(`\\{${key}\\}`, 'g');
-            prompt = prompt.replace(regex, value);
+            if (value !== undefined && value !== null) {
+                // Escape special regex characters in the value
+                const escapedValue = String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                // Replace all occurrences
+                const regex = new RegExp(`\\{${key}\\}`, 'g');
+                prompt = prompt.replace(regex, String(value));
+            }
         });
+        
+        // Clean up any remaining empty lines from removed conditionals
+        prompt = prompt.replace(/\n\s*\n\s*\n/g, '\n\n');
         
         // Check for unreplaced variables (warn but don't fail)
         const unreplacedVars = prompt.match(/\{(\w+)\}/g);
         if (unreplacedVars && unreplacedVars.length > 0) {
-            console.warn(`⚠️ Unreplaced variables in prompt: ${unreplacedVars.join(', ')}`);
+            // Filter out common template markers that might be intentional
+            const filtered = unreplacedVars.filter(v => !['if', '/if'].includes(v.replace(/[{}]/g, '')));
+            if (filtered.length > 0) {
+                console.warn(`⚠️ Unreplaced variables in prompt: ${filtered.join(', ')}`);
+            }
         }
 
         return prompt;
@@ -368,11 +386,26 @@ Output format: JSON with fields: title, excerpt, content (HTML), author, categor
                     }
                 }
 
-                // Load prompt template
-                const stagePrompt = await this._loadPrompt(stage, {
+                // Build variables for prompt (including lens/perspective if available)
+                const promptVariables = {
                     topic: i === 0 ? topic : currentContent, // Use original topic for first stage
                     previousContent: currentContent
-                });
+                };
+                
+                // Add lens/perspective information if available
+                if (options.lensPrompt) {
+                    promptVariables.lensPrompt = options.lensPrompt;
+                }
+                if (options.lens) {
+                    promptVariables.lens = options.lens;
+                }
+                if (options.perspective) {
+                    promptVariables.perspective = options.perspective;
+                    promptVariables.totalPerspectives = options.totalPerspectives;
+                }
+                
+                // Load prompt template
+                const stagePrompt = await this._loadPrompt(stage, promptVariables);
 
                 // Call API with retry logic
                 const apiResponse = await this._callAPI(stagePrompt, {

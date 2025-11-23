@@ -6,6 +6,11 @@ Write a feature-length, narrative-driven article about: {topic}
 - Multiple narrative threads
 - Deep human context
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Craft a compelling narrative from your unique lens/angle while maintaining depth and immersion.{/if}
+
 **Angle: {angle}**
 {tone}
 

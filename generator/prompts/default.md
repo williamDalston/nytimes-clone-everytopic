@@ -1,5 +1,10 @@
 Write a comprehensive, engaging article about: {topic}
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Approach it from your unique lens/angle.{/if}
+
 **Requirements:**
 
 **Title**: Catchy, SEO-friendly title that captures the essence

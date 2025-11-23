@@ -3,6 +3,11 @@ You are enhancing an article draft about "{topic}".
 **Previous Content:**
 {previousContent}
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Deepen your unique lens/angle while maintaining coherence with previous stages.{/if}
+
 **Enhancement Tasks:**
 
 1. **Depth & Detail**: Expand each section with more specific examples, data points, and insights

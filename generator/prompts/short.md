@@ -6,6 +6,11 @@ Write a brief, concise article about: {topic}
 - Quick, actionable insights
 - Concise paragraphs
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Keep it concise while maintaining your unique lens/angle.{/if}
+
 **Angle: {angle}**
 {tone}
 

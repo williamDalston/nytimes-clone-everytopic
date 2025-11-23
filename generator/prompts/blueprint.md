@@ -1,5 +1,10 @@
 You are an expert content architect. Analyze the topic "{topic}" and create a sophisticated blueprint for an intellectually rigorous article that avoids predictable LLM patterns.
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Ensure your angle is distinct from other perspectives while maintaining depth and rigor.{/if}
+
 **Required Elements:**
 
 1. **Central Thesis**: One powerful, debatable sentence that serves as the intellectual backbone

@@ -3,6 +3,11 @@ Optimize the following article about "{topic}" for maximum SEO performance while
 **Article to Optimize:**
 {previousContent}
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Optimize for SEO while preserving your unique lens/angle.{/if}
+
 **SEO Optimization Requirements:**
 
 1. **Title Optimization**:

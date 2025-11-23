@@ -1,5 +1,10 @@
 Take the blueprint you created for "{topic}" and expand it into a comprehensive 1000-1500 word article draft.
 
+{lensPrompt}
+
+**Perspective Context:**
+{if perspective}This is perspective {perspective} of {totalPerspectives} on this topic. Maintain your unique lens/angle while building on the blueprint structure.{/if}
+
 **Enhancement Requirements:**
 
 1. **Historical Context**: Frame insights as a story of discovery, showing how concepts built upon each other

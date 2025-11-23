@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Tags -->
+    <title>{{article.title}} - {{site.name}}</title>
+    <meta name="description" content="{{article.excerpt}}">
+    <meta name="author" content="{{article.author}}">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{article.title}}">
+    <meta property="og:description" content="{{article.excerpt}}">
+    <meta property="og:image" content="{{article.image}}">
+    <meta property="article:published_time" content="{{article.date}}">
+    <meta property="article:author" content="{{article.author}}">
+    <meta property="article:section" content="{{article.category}}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-container">
+                <a href="../index.html" class="logo">
+                    {{site.logoText}}<span class="logo-accent">{{site.logoAccent}}</span>
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="../index.html" class="nav-link">Home</a></li>
+                        <li><a href="#" class="nav-link active">{{article.category}}</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="../index.html" class="search-btn">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Header Ad -->
+    <!-- HEADER_AD_PLACEHOLDER -->
+
+    <main class="container section">
+        <article class="article-full">
+
+            <!-- Article Header -->
+            <header class="article-header">
+                <span class="article-category-badge">{{article.category}}</span>
+                <h1 class="article-title-large">{{article.title}}</h1>
+                <div class="article-meta-large">
+                    <span class="author">By <strong>{{article.author}}</strong></span>
+                    <span class="separator">•</span>
+                    <span class="date">{{article.date}}</span>
+                    <span class="separator">•</span>
+                    <span class="read-time">{{article.readTime}}</span>
+                </div>
+            </header>
+
+            <!-- Featured Image -->
+            <figure class="article-featured-image">
+                <img src="{{article.image}}" alt="{{article.title}}">
+                <figcaption>{{article.title}}</figcaption>
+            </figure>
+
+            <div class="article-layout">
+
+                <!-- Article Content -->
+                <div class="article-body">
+                    {{article.content}}
+
+                    <!-- In-Content Ad -->
+                    <!-- INCONTENT_AD_PLACEHOLDER -->
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Sidebar Ad -->
+                    <!-- SIDEBAR_AD_PLACEHOLDER -->
+
+                    <div class="sidebar-section">
+                        <h3 class="sidebar-title">More in {{article.category}}</h3>
+                        <ul class="trending-list">
+                            <!-- Related articles placeholder -->
+                            <li class="trending-item">
+                                <span class="trending-title">Coming Soon...</span>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer Ad -->
+    <!-- FOOTER_AD_PLACEHOLDER -->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 {{site.name}}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        /* Article Specific Styles */
+        .article-full {
+            max-width: 100%;
+        }
+
+        .article-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto var(--space-8);
+        }
+
+        .article-title-large {
+            font-size: var(--text-5xl);
+            margin: var(--space-4) 0;
+            line-height: 1.1;
+        }
+
+        .article-meta-large {
+            color: var(--color-text-light);
+            font-family: var(--font-body);
+            font-size: var(--text-base);
+        }
+
+        .article-featured-image {
+            margin-bottom: var(--space-8);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        .article-featured-image img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+        }
+
+        .article-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--space-8);
+        }
+
+        .article-body {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: var(--color-text);
+        }
+
+        .article-body p {
+            margin-bottom: var(--space-5);
+        }
+
+        .article-body h2 {
+            font-size: var(--text-2xl);
+            margin-top: var(--space-8);
+            margin-bottom: var(--space-4);
+        }
+
+        .article-body h3 {
+            font-size: var(--text-xl);
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-3);
+        }
+
+        @media (max-width: 1024px) {
+            .article-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .article-title-large {
+                font-size: var(--text-4xl);
+            }
+        }
+    </style>
+
+</body>
+
+</html>

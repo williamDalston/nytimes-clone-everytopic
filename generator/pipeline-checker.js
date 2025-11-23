@@ -84,6 +84,10 @@ class PipelineChecker {
             const placeholders = [];
             const isDryRun = config.llm.dryRun || process.env.DRY_RUN === 'true';
             
+            // Check if API keys are actually set in environment (even if config has placeholders)
+            const hasOpenAIKey = !!(process.env.OPENAI_API_KEY || process.env.LLM_API_KEY);
+            const hasGeminiKey = !!(process.env.GEMINI_API_KEY || process.env.IMAGE_GEN_API_KEY);
+            
             requiredFields.forEach(field => {
                 const parts = field.split('.');
                 let value = config;
@@ -93,7 +97,14 @@ class PipelineChecker {
                 if (!value) {
                     missing.push(field);
                 } else if (value === 'placeholder-llm-key' || value === 'placeholder-nano-banana-key') {
-                    placeholders.push(field);
+                    // Only mark as placeholder if not overridden by environment
+                    if (field === 'api.llm' && hasOpenAIKey) {
+                        // Environment has the key, so it's fine
+                    } else if (field === 'api.imageGen' && hasGeminiKey) {
+                        // Environment has the key, so it's fine
+                    } else {
+                        placeholders.push(field);
+                    }
                 }
             });
             
@@ -107,23 +118,38 @@ class PipelineChecker {
             }
             
             // Placeholder API keys are warnings in dry-run mode, errors otherwise
-            if (placeholders.length > 0) {
+            // But first check if environment variables override them
+            const actualPlaceholders = placeholders.filter(field => {
+                if (field === 'api.llm') {
+                    // Check if environment has the key
+                    return !hasOpenAIKey;
+                } else if (field === 'api.imageGen') {
+                    // Check if environment has the key
+                    return !hasGeminiKey;
+                }
+                return true;
+            });
+            
+            if (actualPlaceholders.length > 0) {
                 if (isDryRun) {
-                    this.warn('Configuration', `Placeholder API keys detected (ok for dry-run): ${placeholders.join(', ')}`, {
+                    this.warn('Configuration', `Placeholder API keys detected (ok for dry-run): ${actualPlaceholders.join(', ')}`, {
                         module,
                         operation,
-                        placeholders
+                        placeholders: actualPlaceholders
                     });
                 } else {
-                    this.fail('Configuration', `Placeholder API keys (not allowed in production): ${placeholders.join(', ')}`, {
+                    this.fail('Configuration', `Placeholder API keys (not allowed in production): ${actualPlaceholders.join(', ')}`, {
                         module,
                         operation,
-                        placeholders
+                        placeholders: actualPlaceholders
                     });
                 }
+            } else if (placeholders.length > 0) {
+                // Placeholders exist in config but environment overrides them - this is fine
+                this.pass('Configuration', 'API keys loaded from environment variables');
             }
             
-            if (missing.length === 0 && (placeholders.length === 0 || isDryRun)) {
+            if (missing.length === 0 && actualPlaceholders.length === 0) {
                 this.pass('Configuration', 'All required configuration fields present');
             }
             

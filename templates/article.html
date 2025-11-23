@@ -264,12 +264,16 @@
             display: grid;
             grid-template-columns: 1fr 300px;
             gap: var(--space-8);
+            position: relative;
+            z-index: 1;
         }
 
         .article-body {
             font-size: 1.125rem;
             line-height: 1.8;
             color: var(--color-text);
+            position: relative;
+            z-index: 10; /* Ensure content stays above ads */
         }
 
         .article-body p {

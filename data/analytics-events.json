@@ -335,113 +335,281 @@
         "page_title": "The Future of Advanced Power BI Advanced Analytics Techniques: What You Need to Know"
       },
       "timestamp": "2025-11-23T06:04:34.470Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/",
+        "page_title": "Home"
+      },
+      "timestamp": "2025-11-23T06:09:37.406Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-trends-2025-what-you-need-to-know",
+        "page_title": "The Future of Power BI Trends 2025: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.412Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-best-power-bi-tools-what-you-need-to-know",
+        "page_title": "The Future of Best Power BI Tools: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.414Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-how-to-master-power-bi-what-you-need-to-know",
+        "page_title": "The Future of How to Master Power BI: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.415Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-for-beginners-what-you-need-to-know",
+        "page_title": "The Future of Power BI for Beginners: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.417Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-advanced-power-bi-techniques-what-you-need-to-know",
+        "page_title": "The Future of Advanced Power BI Techniques: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.418Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-latest-updates-trends-2025-what-you-need-to-know",
+        "page_title": "The Future of Power BI Latest Updates Trends 2025: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.419Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-best-power-bi-latest-updates-tools-what-you-need-to-know",
+        "page_title": "The Future of Best Power BI Latest Updates Tools: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.420Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-how-to-master-power-bi-latest-updates-what-you-need-to-know",
+        "page_title": "The Future of How to Master Power BI Latest Updates: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.421Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-latest-updates-for-beginners-what-you-need-to-know",
+        "page_title": "The Future of Power BI Latest Updates for Beginners: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.422Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-advanced-power-bi-latest-updates-techniques-what-you-need-to-know",
+        "page_title": "The Future of Advanced Power BI Latest Updates Techniques: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.423Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-visualizations-trends-2025-what-you-need-to-know",
+        "page_title": "The Future of Power BI Visualizations Trends 2025: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.424Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-best-power-bi-visualizations-tools-what-you-need-to-know",
+        "page_title": "The Future of Best Power BI Visualizations Tools: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.425Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-how-to-master-power-bi-visualizations-what-you-need-to-know",
+        "page_title": "The Future of How to Master Power BI Visualizations: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.426Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-visualizations-for-beginners-what-you-need-to-know",
+        "page_title": "The Future of Power BI Visualizations for Beginners: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.427Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-advanced-power-bi-visualizations-techniques-what-you-need-to-know",
+        "page_title": "The Future of Advanced Power BI Visualizations Techniques: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.428Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-advanced-analytics-trends-2025-what-you-need-to-know",
+        "page_title": "The Future of Power BI Advanced Analytics Trends 2025: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.429Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-best-power-bi-advanced-analytics-tools-what-you-need-to-know",
+        "page_title": "The Future of Best Power BI Advanced Analytics Tools: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.430Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-how-to-master-power-bi-advanced-analytics-what-you-need-to-know",
+        "page_title": "The Future of How to Master Power BI Advanced Analytics: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.431Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-power-bi-advanced-analytics-for-beginners-what-you-need-to-know",
+        "page_title": "The Future of Power BI Advanced Analytics for Beginners: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.431Z"
+    },
+    {
+      "name": "page_view",
+      "params": {
+        "page_path": "/articles/the-future-of-advanced-power-bi-advanced-analytics-techniques-what-you-need-to-know",
+        "page_title": "The Future of Advanced Power BI Advanced Analytics Techniques: What You Need to Know"
+      },
+      "timestamp": "2025-11-23T06:09:37.432Z"
     }
   ],
   "pageViews": {
     "/": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.194Z",
-      "lastSeen": "2025-11-23T06:04:34.445Z"
+      "lastSeen": "2025-11-23T06:09:37.406Z"
     },
     "/articles/the-future-of-power-bi-trends-2025-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.198Z",
-      "lastSeen": "2025-11-23T06:04:34.449Z"
+      "lastSeen": "2025-11-23T06:09:37.412Z"
     },
     "/articles/the-future-of-best-power-bi-tools-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.200Z",
-      "lastSeen": "2025-11-23T06:04:34.451Z"
+      "lastSeen": "2025-11-23T06:09:37.414Z"
     },
     "/articles/the-future-of-how-to-master-power-bi-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.201Z",
-      "lastSeen": "2025-11-23T06:04:34.452Z"
+      "lastSeen": "2025-11-23T06:09:37.415Z"
     },
     "/articles/the-future-of-power-bi-for-beginners-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.203Z",
-      "lastSeen": "2025-11-23T06:04:34.454Z"
+      "lastSeen": "2025-11-23T06:09:37.417Z"
     },
     "/articles/the-future-of-advanced-power-bi-techniques-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.204Z",
-      "lastSeen": "2025-11-23T06:04:34.454Z"
+      "lastSeen": "2025-11-23T06:09:37.418Z"
     },
     "/articles/the-future-of-power-bi-latest-updates-trends-2025-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.205Z",
-      "lastSeen": "2025-11-23T06:04:34.455Z"
+      "lastSeen": "2025-11-23T06:09:37.419Z"
     },
     "/articles/the-future-of-best-power-bi-latest-updates-tools-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.206Z",
-      "lastSeen": "2025-11-23T06:04:34.456Z"
+      "lastSeen": "2025-11-23T06:09:37.420Z"
     },
     "/articles/the-future-of-how-to-master-power-bi-latest-updates-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.207Z",
-      "lastSeen": "2025-11-23T06:04:34.457Z"
+      "lastSeen": "2025-11-23T06:09:37.421Z"
     },
     "/articles/the-future-of-power-bi-latest-updates-for-beginners-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.209Z",
-      "lastSeen": "2025-11-23T06:04:34.458Z"
+      "lastSeen": "2025-11-23T06:09:37.422Z"
     },
     "/articles/the-future-of-advanced-power-bi-latest-updates-techniques-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.211Z",
-      "lastSeen": "2025-11-23T06:04:34.459Z"
+      "lastSeen": "2025-11-23T06:09:37.423Z"
     },
     "/articles/the-future-of-power-bi-visualizations-trends-2025-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.212Z",
-      "lastSeen": "2025-11-23T06:04:34.460Z"
+      "lastSeen": "2025-11-23T06:09:37.424Z"
     },
     "/articles/the-future-of-best-power-bi-visualizations-tools-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.213Z",
-      "lastSeen": "2025-11-23T06:04:34.461Z"
+      "lastSeen": "2025-11-23T06:09:37.425Z"
     },
     "/articles/the-future-of-how-to-master-power-bi-visualizations-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.214Z",
-      "lastSeen": "2025-11-23T06:04:34.461Z"
+      "lastSeen": "2025-11-23T06:09:37.426Z"
     },
     "/articles/the-future-of-power-bi-visualizations-for-beginners-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.214Z",
-      "lastSeen": "2025-11-23T06:04:34.462Z"
+      "lastSeen": "2025-11-23T06:09:37.427Z"
     },
     "/articles/the-future-of-advanced-power-bi-visualizations-techniques-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.216Z",
-      "lastSeen": "2025-11-23T06:04:34.463Z"
+      "lastSeen": "2025-11-23T06:09:37.428Z"
     },
     "/articles/the-future-of-power-bi-advanced-analytics-trends-2025-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.217Z",
-      "lastSeen": "2025-11-23T06:04:34.464Z"
+      "lastSeen": "2025-11-23T06:09:37.429Z"
     },
     "/articles/the-future-of-best-power-bi-advanced-analytics-tools-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.218Z",
-      "lastSeen": "2025-11-23T06:04:34.465Z"
+      "lastSeen": "2025-11-23T06:09:37.430Z"
     },
     "/articles/the-future-of-how-to-master-power-bi-advanced-analytics-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.219Z",
-      "lastSeen": "2025-11-23T06:04:34.465Z"
+      "lastSeen": "2025-11-23T06:09:37.430Z"
     },
     "/articles/the-future-of-power-bi-advanced-analytics-for-beginners-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.220Z",
-      "lastSeen": "2025-11-23T06:04:34.467Z"
+      "lastSeen": "2025-11-23T06:09:37.431Z"
     },
     "/articles/the-future-of-advanced-power-bi-advanced-analytics-techniques-what-you-need-to-know": {
-      "count": 2,
+      "count": 3,
       "firstSeen": "2025-11-23T06:04:31.221Z",
-      "lastSeen": "2025-11-23T06:04:34.470Z"
+      "lastSeen": "2025-11-23T06:09:37.432Z"
     }
   },
   "customEvents": {
@@ -781,6 +949,174 @@
           "page_title": "The Future of Advanced Power BI Advanced Analytics Techniques: What You Need to Know"
         },
         "timestamp": "2025-11-23T06:04:34.470Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/",
+          "page_title": "Home"
+        },
+        "timestamp": "2025-11-23T06:09:37.406Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-trends-2025-what-you-need-to-know",
+          "page_title": "The Future of Power BI Trends 2025: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.412Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-best-power-bi-tools-what-you-need-to-know",
+          "page_title": "The Future of Best Power BI Tools: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.414Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-how-to-master-power-bi-what-you-need-to-know",
+          "page_title": "The Future of How to Master Power BI: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.415Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-for-beginners-what-you-need-to-know",
+          "page_title": "The Future of Power BI for Beginners: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.417Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-advanced-power-bi-techniques-what-you-need-to-know",
+          "page_title": "The Future of Advanced Power BI Techniques: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.418Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-latest-updates-trends-2025-what-you-need-to-know",
+          "page_title": "The Future of Power BI Latest Updates Trends 2025: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.419Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-best-power-bi-latest-updates-tools-what-you-need-to-know",
+          "page_title": "The Future of Best Power BI Latest Updates Tools: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.420Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-how-to-master-power-bi-latest-updates-what-you-need-to-know",
+          "page_title": "The Future of How to Master Power BI Latest Updates: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.421Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-latest-updates-for-beginners-what-you-need-to-know",
+          "page_title": "The Future of Power BI Latest Updates for Beginners: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.422Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-advanced-power-bi-latest-updates-techniques-what-you-need-to-know",
+          "page_title": "The Future of Advanced Power BI Latest Updates Techniques: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.423Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-visualizations-trends-2025-what-you-need-to-know",
+          "page_title": "The Future of Power BI Visualizations Trends 2025: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.424Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-best-power-bi-visualizations-tools-what-you-need-to-know",
+          "page_title": "The Future of Best Power BI Visualizations Tools: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.425Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-how-to-master-power-bi-visualizations-what-you-need-to-know",
+          "page_title": "The Future of How to Master Power BI Visualizations: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.426Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-visualizations-for-beginners-what-you-need-to-know",
+          "page_title": "The Future of Power BI Visualizations for Beginners: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.427Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-advanced-power-bi-visualizations-techniques-what-you-need-to-know",
+          "page_title": "The Future of Advanced Power BI Visualizations Techniques: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.428Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-advanced-analytics-trends-2025-what-you-need-to-know",
+          "page_title": "The Future of Power BI Advanced Analytics Trends 2025: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.429Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-best-power-bi-advanced-analytics-tools-what-you-need-to-know",
+          "page_title": "The Future of Best Power BI Advanced Analytics Tools: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.430Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-how-to-master-power-bi-advanced-analytics-what-you-need-to-know",
+          "page_title": "The Future of How to Master Power BI Advanced Analytics: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.431Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-power-bi-advanced-analytics-for-beginners-what-you-need-to-know",
+          "page_title": "The Future of Power BI Advanced Analytics for Beginners: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.431Z"
+      },
+      {
+        "name": "page_view",
+        "params": {
+          "page_path": "/articles/the-future-of-advanced-power-bi-advanced-analytics-techniques-what-you-need-to-know",
+          "page_title": "The Future of Advanced Power BI Advanced Analytics Techniques: What You Need to Know"
+        },
+        "timestamp": "2025-11-23T06:09:37.432Z"
       }
     ]
   }

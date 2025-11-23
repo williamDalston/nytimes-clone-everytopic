@@ -371,6 +371,13 @@
         text-align: center;
         background-color: #f8f9fa;
         overflow: hidden;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Prevent ads from overlapping main content */
+    .main-content .ad-slot {
+        z-index: 1;
     }
 
     .ad-leaderboard {
@@ -391,7 +398,18 @@
 
     .ad-sticky {
         position: sticky;
-        top: 20px;
+        top: calc(var(--header-height, 70px) + var(--space-4, 1rem));
+        z-index: 100;
+        max-height: calc(100vh - var(--header-height, 70px) - var(--space-8, 3rem));
+        overflow-y: auto;
+    }
+    
+    /* Ensure sticky ads don't overlap content on mobile */
+    @media (max-width: 1024px) {
+        .ad-sticky {
+            position: static;
+            max-height: none;
+        }
     }
 
     .ad-placeholder {
@@ -511,6 +529,13 @@
         text-align: center;
         background-color: #f8f9fa;
         overflow: hidden;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Prevent ads from overlapping main content */
+    .main-content .ad-slot {
+        z-index: 1;
     }
 
     .ad-leaderboard {
@@ -531,7 +556,18 @@
 
     .ad-sticky {
         position: sticky;
-        top: 20px;
+        top: calc(var(--header-height, 70px) + var(--space-4, 1rem));
+        z-index: 100;
+        max-height: calc(100vh - var(--header-height, 70px) - var(--space-8, 3rem));
+        overflow-y: auto;
+    }
+    
+    /* Ensure sticky ads don't overlap content on mobile */
+    @media (max-width: 1024px) {
+        .ad-sticky {
+            position: static;
+            max-height: none;
+        }
     }
 
     .ad-placeholder {
@@ -588,6 +624,13 @@
         text-align: center;
         background-color: #f8f9fa;
         overflow: hidden;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Prevent ads from overlapping main content */
+    .main-content .ad-slot {
+        z-index: 1;
     }
 
     .ad-leaderboard {
@@ -608,7 +651,18 @@
 
     .ad-sticky {
         position: sticky;
-        top: 20px;
+        top: calc(var(--header-height, 70px) + var(--space-4, 1rem));
+        z-index: 100;
+        max-height: calc(100vh - var(--header-height, 70px) - var(--space-8, 3rem));
+        overflow-y: auto;
+    }
+    
+    /* Ensure sticky ads don't overlap content on mobile */
+    @media (max-width: 1024px) {
+        .ad-sticky {
+            position: static;
+            max-height: none;
+        }
     }
 
     .ad-placeholder {
@@ -679,6 +733,13 @@
         text-align: center;
         background-color: #f8f9fa;
         overflow: hidden;
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Prevent ads from overlapping main content */
+    .main-content .ad-slot {
+        z-index: 1;
     }
 
     .ad-leaderboard {
@@ -699,7 +760,18 @@
 
     .ad-sticky {
         position: sticky;
-        top: 20px;
+        top: calc(var(--header-height, 70px) + var(--space-4, 1rem));
+        z-index: 100;
+        max-height: calc(100vh - var(--header-height, 70px) - var(--space-8, 3rem));
+        overflow-y: auto;
+    }
+    
+    /* Ensure sticky ads don't overlap content on mobile */
+    @media (max-width: 1024px) {
+        .ad-sticky {
+            position: static;
+            max-height: none;
+        }
     }
 
     .ad-placeholder {
@@ -775,12 +847,16 @@
             display: grid;
             grid-template-columns: 1fr 300px;
             gap: var(--space-8);
+            position: relative;
+            z-index: 1;
         }
 
         .article-body {
             font-size: 1.125rem;
             line-height: 1.8;
             color: var(--color-text);
+            position: relative;
+            z-index: 10; /* Ensure content stays above ads */
         }
 
         .article-body p {

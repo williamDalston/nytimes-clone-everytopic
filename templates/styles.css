@@ -318,6 +318,11 @@ p {
 }
 
 /* Better line-height for article content */
+.article-body {
+  position: relative;
+  z-index: 10; /* Ensure content stays above ads */
+}
+
 .article-body p {
   max-width: 65ch;
   line-height: 1.8;
@@ -718,6 +723,8 @@ p {
 .main-content {
   display: grid;
   grid-template-columns: 1fr 350px;
+  position: relative;
+  z-index: 1;
   gap: var(--space-10);
   align-items: start;
 }
@@ -891,6 +898,9 @@ p {
   position: sticky;
   top: calc(var(--header-height) + var(--space-4));
   height: fit-content;
+  z-index: 100;
+  max-height: calc(100vh - var(--header-height) - var(--space-8));
+  overflow-y: auto;
 }
 
 .sidebar-section {
